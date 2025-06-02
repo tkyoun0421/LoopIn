@@ -1,0 +1,36 @@
+name: CI - React App
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  react-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint (ESLint)
+        run: npm run lint
+
+      - name: Prettier Check
+        run: npm run format -- --check
+
+      - name: TypeScript Check
+        run: npx tsc --noEmit
+
+      - name: Unit Test (React Testing Library + Jest)
+        run: npm run test -- --watchAll=false --ci
+
+      - name: Webpack Build
+        run: npm run build

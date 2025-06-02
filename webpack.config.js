@@ -11,12 +11,20 @@ module.exports = (env, argv) => {
     entry: path.resolve(__dirname, "src", "index.tsx"),
     resolve: {
       extensions: [".tsx", ".ts", ".js"],
+      alias: {
+        '@app': path.resolve(__dirname, 'src/app'),
+        '@pages': path.resolve(__dirname, 'src/pages'),
+        '@widgets': path.resolve(__dirname, 'src/widgets'),
+        '@features': path.resolve(__dirname, 'src/features'),
+        '@entities': path.resolve(__dirname, 'src/entities'),
+        '@shared': path.resolve(__dirname, 'src/shared'),
+      },
     },
     module: {
       rules: [
         {
           test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
+          use: ["style-loader", "css-loader"]
         },
         {
           test: /\.svg$/,
@@ -24,17 +32,17 @@ module.exports = (env, argv) => {
             {
               loader: "@svgr/webpack",
               options: {
-                icon: true,
-              },
+                icon: true
+              }
             },
             {
               loader: "file-loader",
               options: {
                 name: "[name].[ext]?ver=[hash]",
-                outputPath: "images",
-              },
-            },
-          ],
+                outputPath: "images"
+              }
+            }
+          ]
         },
         {
           test: /\.(png|jpg|gif|jpeg)$/,
@@ -43,47 +51,47 @@ module.exports = (env, argv) => {
               loader: "file-loader",
               options: {
                 name: "[name].[ext]?ver=[hash]",
-                outputPath: "images",
-              },
-            },
-          ],
+                outputPath: "images"
+              }
+            }
+          ]
         },
         {
           test: /\.(ts|js)x?$/,
           exclude: /node_modules/,
           use: [
             {
-              loader: "babel-loader",
-            },
-          ],
-        },
-      ],
+              loader: "babel-loader"
+            }
+          ]
+        }
+      ]
     },
     output: {
       path: path.resolve(__dirname, "dist"),
       chunkFilename: "[name].js?ver=[hash]",
       filename: "[name].js?ver=[hash]",
-      publicPath: "/",
+      publicPath: "/"
     },
     devtool: isProduction ? "source-map" : "inline-source-map",
     devServer: {
       port: 3000,
       open: true,
       hot: true,
-      historyApiFallback: true,
+      historyApiFallback: true
     },
     optimization: {
-      minimize: isProduction,
+      minimize: isProduction
     },
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "src", "index.html"),
+        template: path.resolve(__dirname, "src", "index.html")
       }),
       new Dotenv({
         allowEmptyValues: true,
-        systemvars: true,
-      }),
-    ],
+        systemvars: true
+      })
+    ]
   };
 };
