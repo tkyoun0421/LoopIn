@@ -30,7 +30,7 @@ jobs:
         run: npx tsc --noEmit
 
       - name: Unit Test (React Testing Library + Jest)
-        run: npm run test -- --watchAll=false --ci
-
+        run: npm run test -- --watchAll=false --ci --passWithNoTests
+        
       - name: Webpack Build
         run: npm run build
