@@ -14,6 +14,18 @@ module.exports = {
     es2021: true,
     node: true,
   },
+  files: ["**/*.{js,ts,jsx,tsx}"],
+  ignores: ["dist/**", "build/**", "node_modules/**"],
+  languageOptions: {
+    parser: tsParser,
+    parserOptions: {
+      sourceType: "module",
+      ecmaVersion: "latest",
+    },
+  },
+  plugins: {
+    "@typescript-eslint": tsPlugin,
+  },
   extends: [
     "eslint:recommended",
     "plugin:react/recommended",
