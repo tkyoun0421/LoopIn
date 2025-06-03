@@ -1,4 +1,4 @@
-import { JSX } from "react";
+import { JSX, Suspense } from "react";
 import { Outlet } from "react-router";
 
 import SideBar from "@widgets/SideBar/SideBar";
@@ -6,8 +6,10 @@ import SideBar from "@widgets/SideBar/SideBar";
 const AppLayout = (): JSX.Element => {
   return (
     <>
-      <SideBar />
-      <Outlet />
+      <Suspense fallback={"loading..."}>
+        <SideBar />
+        <Outlet />
+      </Suspense>
     </>
   );
 };

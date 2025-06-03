@@ -1,7 +1,11 @@
-import path from "path"; 
+import path from "path";
+import { fileURLToPath } from "url";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
-import Dotenv from "dotenv-webpack"; 
-import HtmlWebpackPlugin from "html-webpack-plugin"; 
+import Dotenv from "dotenv-webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default (_env, argv) => {
   const isProduction = argv.mode === "production";
@@ -24,7 +28,7 @@ export default (_env, argv) => {
       rules: [
         {
           test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
+          use: ["style-loader", "css-loader", "postcss-loader"],
         },
         {
           test: /\.svg$/,

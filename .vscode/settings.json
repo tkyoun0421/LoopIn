@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["TTFB"]
+  "cSpell.words": ["TTFB"],
+  "css.lint.unknownAtRules": "ignore"
 }

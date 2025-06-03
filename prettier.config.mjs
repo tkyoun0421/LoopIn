@@ -1,4 +1,3 @@
-/** @type {import('prettier').Config} */
 export default {
   tailwindStylesheet: "./src/app/styles/global.css",
   tailwindConfig: "./tailwind.config.js",

@@ -1,4 +1,3 @@
-/** @type {import('eslint').Linter.Config[]} */
 import typescriptParser from "@typescript-eslint/parser";
 import typescriptPlugin from "@typescript-eslint/eslint-plugin";
 import reactPlugin from "eslint-plugin-react";
