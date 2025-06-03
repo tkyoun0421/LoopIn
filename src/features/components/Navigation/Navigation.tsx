@@ -1,6 +1,6 @@
 import { Home, Search } from "lucide-react";
 import { JSX } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
 import NavigationButton from "./NavigationButton";
 
