@@ -74,9 +74,7 @@ export default [
           pathGroups: [
             { pattern: "@app/**", group: "internal", position: "before" },
             { pattern: "@pages/**", group: "internal", position: "before" },
-            { pattern: "@widgets/**", group: "internal", position: "before" },
             { pattern: "@features/**", group: "internal", position: "before" },
-            { pattern: "@entities/**", group: "internal", position: "before" },
             { pattern: "@shared/**", group: "internal", position: "before" },
           ],
           pathGroupsExcludedImportTypes: ["builtin"],
@@ -96,18 +94,10 @@ export default [
             },
             {
               from: "pages",
-              allow: ["shared", "entities", "features", "widgets"],
-            },
-            {
-              from: "widgets",
-              allow: ["shared", "entities", "features"],
+              allow: ["shared", "features"],
             },
             {
               from: "features",
-              allow: ["shared", "entities"],
-            },
-            {
-              from: "entities",
               allow: ["shared"],
             },
             {
@@ -130,9 +120,7 @@ export default [
       "boundaries/elements": [
         { type: "app", pattern: "@app/*" },
         { type: "pages", pattern: "@pages/*" },
-        { type: "widgets", pattern: "@widgets/*" },
         { type: "features", pattern: "@features/*" },
-        { type: "entities", pattern: "@entities/*" },
         { type: "shared", pattern: "@shared/*" },
       ],
     },
