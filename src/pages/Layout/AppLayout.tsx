@@ -1,5 +1,5 @@
 import { JSX, Suspense } from "react";
-import { Outlet } from "react-router";
+import { Outlet } from "react-router-dom";
 
 import LoadingPage from "@pages/LoadingPage/LoadingPage";
 

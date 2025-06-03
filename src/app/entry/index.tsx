@@ -1,9 +1,9 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router";
+import { BrowserRouter } from "react-router-dom";
 
 import reportWebVitals from "@app/configs/reportWebVitals";
-import App from "@app/router/App";
+import App from "@app/routes/App";
 
 import "@app/styles/globals.css";
 

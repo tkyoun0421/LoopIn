@@ -1,7 +1,7 @@
 import { Moon, Sun } from "lucide-react";
 import { JSX } from "react";
 
-import useTheme, { Theme } from "@shared/lib/theme/useTheme";
+import useTheme, { Theme } from "@shared/hooks/theme/useTheme";
 import Button from "@shared/ui/Button/Button";
 import Logo from "@shared/ui/Logo/Logo";
 

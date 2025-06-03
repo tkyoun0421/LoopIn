@@ -1,6 +1,6 @@
 import { Home, Search } from "lucide-react";
 import { JSX, ReactNode } from "react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 
 type NavigationButtonProps = {
   to: string;
