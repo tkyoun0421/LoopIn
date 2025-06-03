@@ -1,6 +1,4 @@
 export default {
-  tailwindStylesheet: "./src/app/styles/global.css",
-  tailwindConfig: "./tailwind.config.js",
   plugins: ["prettier-plugin-tailwindcss"],
   semi: true,
   singleQuote: false,
