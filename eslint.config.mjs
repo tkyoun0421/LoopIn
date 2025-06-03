@@ -1,10 +1,17 @@
-/** @type {import('eslint').Linter.Config[]} */
-module.exports = [
+import typescriptParser from "@typescript-eslint/parser";
+import typescriptPlugin from "@typescript-eslint/eslint-plugin";
+import reactPlugin from "eslint-plugin-react";
+import reactHooksPlugin from "eslint-plugin-react-hooks";
+import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
+import importPlugin from "eslint-plugin-import";
+import boundariesPlugin from "eslint-plugin-boundaries";
+
+export default [
   {
     files: ["**/*.{js,ts,jsx,tsx}"],
     ignores: ["dist/**", "build/**", "node_modules/**"],
     languageOptions: {
-      parser: require("@typescript-eslint/parser"),
+      parser: typescriptParser,
       parserOptions: {
         ecmaVersion: 2020,
         sourceType: "module",
@@ -27,37 +34,32 @@ module.exports = [
       },
     },
     plugins: {
-      "@typescript-eslint": require("@typescript-eslint/eslint-plugin"),
-      react: require("eslint-plugin-react"),
-      "react-hooks": require("eslint-plugin-react-hooks"),
-      "jsx-a11y": require("eslint-plugin-jsx-a11y"),
-      import: require("eslint-plugin-import"),
-      boundaries: require("eslint-plugin-boundaries"),
+      "@typescript-eslint": typescriptPlugin,
+      react: reactPlugin,
+      "react-hooks": reactHooksPlugin,
+      "jsx-a11y": jsxA11yPlugin,
+      import: importPlugin,
+      boundaries: boundariesPlugin,
     },
     rules: {
-      // Basic ESLint rules
       "no-unused-vars": "off",
       "no-undef": "off",
       "comma-dangle": ["error", "always-multiline"],
 
-      // TypeScript rules
       "@typescript-eslint/no-unused-vars": [
         "error",
         { argsIgnorePattern: "^_" },
       ],
       "@typescript-eslint/explicit-module-boundary-types": "warn",
 
-      // React rules
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
       "react/jsx-uses-react": "error",
       "react/jsx-uses-vars": "error",
 
-      // React Hooks
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
 
-      // Import ordering
       "import/order": [
         "warn",
         {
@@ -83,7 +85,6 @@ module.exports = [
         },
       ],
 
-      // FSD boundaries
       "boundaries/element-types": [
         "warn",
         {
@@ -91,14 +92,7 @@ module.exports = [
           rules: [
             {
               from: "app",
-              allow: [
-                "shared",
-                "entities",
-                "features",
-                "widgets",
-                "pages",
-                "app",
-              ],
+              allow: ["pages"],
             },
             {
               from: "pages",

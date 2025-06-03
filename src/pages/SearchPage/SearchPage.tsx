@@ -2,7 +2,7 @@ import { JSX } from "react";
 
 const SearchPage = (): JSX.Element => {
   return (
-    <div>
+    <div className="min-h-screen">
       <h1>SearchPage</h1>
     </div>
   );

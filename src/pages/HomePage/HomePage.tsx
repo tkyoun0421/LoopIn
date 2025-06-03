@@ -2,9 +2,9 @@ import { JSX } from "react";
 
 const HomePage = (): JSX.Element => {
   return (
-    <div>
-      <h1>HomePage</h1>
-    </div>
+    <>
+      <h1>안녕하세요! 👋</h1>
+    </>
   );
 };
 

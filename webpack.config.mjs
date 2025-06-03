@@ -1,31 +1,34 @@
-const path = require("path");
+import path from "path";
+import { fileURLToPath } from "url";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import Dotenv from "dotenv-webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const Dotenv = require("dotenv-webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-module.exports = (env, argv) => {
+export default (_env, argv) => {
   const isProduction = argv.mode === "production";
 
   return {
     mode: isProduction ? "production" : "development",
-    entry: path.resolve(__dirname, "src", "index.tsx"),
+    entry: path.resolve(__dirname, "./src/app/entry", "index.tsx"),
     resolve: {
       extensions: [".tsx", ".ts", ".js"],
       alias: {
-        '@app': path.resolve(__dirname, 'src/app'),
-        '@pages': path.resolve(__dirname, 'src/pages'),
-        '@widgets': path.resolve(__dirname, 'src/widgets'),
-        '@features': path.resolve(__dirname, 'src/features'),
-        '@entities': path.resolve(__dirname, 'src/entities'),
-        '@shared': path.resolve(__dirname, 'src/shared'),
+        "@app": path.resolve(__dirname, "src/app"),
+        "@pages": path.resolve(__dirname, "src/pages"),
+        "@widgets": path.resolve(__dirname, "src/widgets"),
+        "@features": path.resolve(__dirname, "src/features"),
+        "@entities": path.resolve(__dirname, "src/entities"),
+        "@shared": path.resolve(__dirname, "src/shared"),
       },
     },
     module: {
       rules: [
         {
           test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
+          use: ["style-loader", "css-loader", "postcss-loader"],
         },
         {
           test: /\.svg$/,
@@ -87,7 +90,7 @@ module.exports = (env, argv) => {
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "src", "index.html"),
+        template: path.resolve(__dirname, "./src/app/public", "index.html"),
       }),
       new Dotenv({
         allowEmptyValues: true,
