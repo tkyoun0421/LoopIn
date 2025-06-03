@@ -1,7 +1,7 @@
 import { JSX } from "react";
 
-import MyLibrary from "@widgets/MyLibrary/MyLibrary";
-import Navigation from "@widgets/Navigation/Navigation";
+import MyLibrary from "@features/components/MyLibrary/MyLibrary";
+import Navigation from "@features/components/Navigation/Navigation";
 
 const SideBar = (): JSX.Element => {
   return (
