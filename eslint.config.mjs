@@ -120,6 +120,10 @@ export default [
       "import/resolver": {
         typescript: {
           project: "./tsconfig.json",
+          alwaysTryTypes: true,
+        },
+        webpack: {
+          config: "./webpack.config.js",
         },
       },
       "boundaries/elements": [

@@ -1,9 +1,11 @@
 import { JSX } from "react";
 
+import NewReleases from "@features/albums/ui/NewReleases";
+
 const HomePage = (): JSX.Element => {
   return (
     <>
-      <h1>안녕하세요! 👋</h1>
+      <NewReleases />
     </>
   );
 };
