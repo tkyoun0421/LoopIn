@@ -4,7 +4,7 @@ import { getNewReleases } from "@features/albums/api/getNewReleases";
 import { AlbumsResponse } from "@features/albums/model/albums";
 import useClientAuthToken from "@features/auth/hooks/useClientAuthToken";
 
-import { newReleasesEndpoint } from "@shared/configs/env";
+import { NEW_RELEASES_ENDPOINT } from "@shared/configs/env";
 
 const useGetNewReleases = (): UseQueryResult<AlbumsResponse | undefined> => {
   const clientAuthToken = useClientAuthToken();
@@ -12,9 +12,11 @@ const useGetNewReleases = (): UseQueryResult<AlbumsResponse | undefined> => {
   return useQuery({
     queryKey: ["new-releases"],
     queryFn: async () => {
-      if (clientAuthToken) {
-        return getNewReleases(newReleasesEndpoint, clientAuthToken);
+      if (!clientAuthToken) {
+        throw new Error("fail to fetch client auth token.");
       }
+
+      return getNewReleases(NEW_RELEASES_ENDPOINT, clientAuthToken);
     },
     enabled: !!clientAuthToken,
   });
