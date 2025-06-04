@@ -8,8 +8,8 @@ const Navigation = (): JSX.Element => {
   const { pathname } = useLocation();
 
   return (
-    <nav className="flex flex-col gap-2">
-      <ul>
+    <nav>
+      <ul className="flex flex-col gap-2">
         <li>
           <NavigationButton
             to="/"

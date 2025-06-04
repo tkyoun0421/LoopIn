@@ -32,9 +32,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepare": "husky install",
-    "lint:changed": "git diff --name-only --diff-filter=ACMRTUXB HEAD | grep -E '\\.(js|jsx|ts|tsx)$' | xargs eslint --fix",
-    "format:changed": "git diff --name-only --diff-filter=ACMRTUXB HEAD | grep -E '\\.(js|jsx|ts|tsx|css|json|md)$' | xargs prettier --write",
-    "commit": "npm run lint:changed && npm run format:changed && cz"
+    "commit": "lint-staged && cz"
   },
   "config": {
     "commitizen": {
@@ -49,8 +47,8 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write",
+      "eslint --cache --fix",
+      "prettier --cache --write",
       "git add"
     ],
     "*.{css,json,md}": [
