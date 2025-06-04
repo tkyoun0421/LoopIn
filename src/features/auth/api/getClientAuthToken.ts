@@ -8,7 +8,7 @@ const encodeBasicAuthHeader = (clientId: string, secretKey: string): string => {
   return `Basic ${btoa(`${clientId}:${secretKey}`)}`;
 };
 
-export const getClientAuthToken = async (
+const getClientAuthToken = async (
   endpoint: string,
 ): Promise<ClientAuthTokenResponse> => {
   try {
@@ -29,3 +29,5 @@ export const getClientAuthToken = async (
     throw new Error("fail to fetch client credential token");
   }
 };
+
+export default getClientAuthToken;
