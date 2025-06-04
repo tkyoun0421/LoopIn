@@ -74,6 +74,7 @@ export default [
           pathGroups: [
             { pattern: "@app/**", group: "internal", position: "before" },
             { pattern: "@pages/**", group: "internal", position: "before" },
+            { pattern: "@widgets/**", group: "internal", position: "before" },
             { pattern: "@features/**", group: "internal", position: "before" },
             { pattern: "@shared/**", group: "internal", position: "before" },
           ],
@@ -90,15 +91,19 @@ export default [
           rules: [
             {
               from: "app",
-              allow: ["pages"],
+              allow: ["app"],
             },
             {
               from: "pages",
-              allow: ["shared", "features"],
+              allow: ["shared", "features", "widgets"],
+            },
+            {
+              from: "widgets",
+              allow: ["shared", "features", "widgets"],
             },
             {
               from: "features",
-              allow: ["shared"],
+              allow: ["shared", "features"],
             },
             {
               from: "shared",
@@ -120,6 +125,7 @@ export default [
       "boundaries/elements": [
         { type: "app", pattern: "@app/*" },
         { type: "pages", pattern: "@pages/*" },
+        { type: "widgets", pattern: "@widgets/*" },
         { type: "features", pattern: "@features/*" },
         { type: "shared", pattern: "@shared/*" },
       ],

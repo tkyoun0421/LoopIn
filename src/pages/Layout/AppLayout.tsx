@@ -3,8 +3,8 @@ import { Outlet } from "react-router";
 
 import LoadingPage from "@pages/LoadingPage/LoadingPage";
 
-import Header from "@features/components/Header/Header";
-import SideBar from "@features/components/SideBar/SideBar";
+import Header from "@widgets/Header/Header";
+import SideBar from "@widgets/SideBar/SideBar";
 
 const AppLayout = (): JSX.Element => {
   return (

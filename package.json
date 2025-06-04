@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tanstack/react-query": "^5.80.2",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -11,6 +12,7 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
+    "axios": "^1.9.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",
@@ -30,7 +32,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepare": "husky install",
-    "commit": "npm run lint:fix && npm run format && cz"
+    "commit": "lint-staged && cz"
   },
   "config": {
     "commitizen": {
@@ -45,12 +47,12 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write",
+      "eslint --cache --fix",
+      "prettier --write --cache",
       "git add"
     ],
     "*.{css,json,md}": [
-      "prettier --write",
+      "prettier --write --cache",
       "git add"
     ]
   },
