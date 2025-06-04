@@ -9,18 +9,24 @@ const Navigation = (): JSX.Element => {
 
   return (
     <nav className="flex flex-col gap-2">
-      <NavigationButton
-        to="/"
-        icon={<Home />}
-        label="Home"
-        active={pathname === "/"}
-      />
-      <NavigationButton
-        to="/search"
-        icon={<Search />}
-        label="Search"
-        active={pathname === "/search"}
-      />
+      <ul>
+        <li>
+          <NavigationButton
+            to="/"
+            icon={<Home />}
+            label="Home"
+            active={pathname === "/"}
+          />
+        </li>
+        <li>
+          <NavigationButton
+            to="/search"
+            icon={<Search />}
+            label="Search"
+            active={pathname === "/search"}
+          />
+        </li>
+      </ul>
     </nav>
   );
 };

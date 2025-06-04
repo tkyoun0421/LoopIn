@@ -5,7 +5,7 @@ import Navigation from "@features/components/Navigation/Navigation";
 
 const SideBar = (): JSX.Element => {
   return (
-    <aside className="flex w-80 flex-col gap-4 border-r border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.3)] p-4 dark:bg-[hsl(var(--card))]">
+    <aside className="hidden w-80 flex-col gap-4 border-r border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.3)] p-4 lg:flex dark:bg-[hsl(var(--card))]">
       <Navigation />
       <MyLibrary />
     </aside>

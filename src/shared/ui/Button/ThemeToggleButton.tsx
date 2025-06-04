@@ -9,10 +9,12 @@ const ThemeToggleButton = (): JSX.Element => {
 
   return (
     <Button
+      size="sm"
+      variant="secondary"
       onClick={toggleTheme}
-      className="cursor-pointer rounded-md text-sm font-medium hover:bg-[hsl(var(--accent))]"
+      className="h-10 w-10 cursor-pointer rounded-md text-sm font-medium"
     >
-      {theme === "light" ? <Moon /> : <Sun />}
+      {theme === "light" ? <Moon size={24} /> : <Sun size={24} />}
     </Button>
   );
 };

@@ -8,16 +8,18 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const baseStyles =
-  "inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer disabled:opacity-50 disabled:pointer-events-none";
+  "focus:outline-none inline-flex items-center justify-center font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer disabled:opacity-50 disabled:pointer-events-none";
 
 const variantStyles: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  primary: "bg-primary text-primary-foreground hover:bg-primary/90",
-  secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+  primary:
+    "bg-[hsl(var(--primary))] text-white hover:bg-[hsl(var(--primary)/0.9)]",
+  secondary:
+    "bg-[hsl(var(--background))] text-[hsl(var(--foreground))] hover:bg-[hsl(var(--accent))]",
   outline:
-    "border border-border bg-transparent hover:bg-accent hover:text-accent-foreground",
+    "border border-border bg-transparent hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))]",
   ghost: "bg-transparent hover:bg-muted",
   destructive:
-    "bg-destructive text-destructive-foreground hover:bg-destructive/80",
+    "bg-[hsl(var(--destructive))] text-[hsl(var(--destructive-foreground))] hover:bg-[hsl(var(--destructive)/0.8)]",
 };
 
 const sizeStyles: Record<NonNullable<ButtonProps["size"]>, string> = {
