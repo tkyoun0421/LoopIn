@@ -25,7 +25,7 @@ src/
 │   │   ├── model/
 │   │   ├── ui/
 │   │   └── hooks/
-│   ├── music/
+│   ├── albums/
 │   │   ├── api/
 │   │   ├── model/
 │   │   ├── ui/
