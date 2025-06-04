@@ -32,7 +32,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepare": "husky install",
-    "commit": "npm run lint:fix && npm run format && cz"
+    "lint:changed": "git diff --name-only --diff-filter=ACMRTUXB HEAD | grep -E '\\.(js|jsx|ts|tsx)$' | xargs eslint --fix",
+    "format:changed": "git diff --name-only --diff-filter=ACMRTUXB HEAD | grep -E '\\.(js|jsx|ts|tsx|css|json|md)$' | xargs prettier --write",
+    "commit": "npm run lint:changed && npm run format:changed && cz"
   },
   "config": {
     "commitizen": {
