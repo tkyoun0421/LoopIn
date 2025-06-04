@@ -1,7 +1,6 @@
 ```bash
 src/
 ├── app/
-│   ├── providers/
 │   ├── routes/
 │   ├── configs/
 │   ├── entry/
@@ -15,6 +14,11 @@ src/
 │   ├── PlaylistPage.tsx
 │   ├── LoadingPage.tsx
 │   └── LoginPage.tsx
+├── widgets/
+│   ├── Header/
+│   ├── Navigation/
+│   ├── SideBar/
+│   └── MyLibrary/
 ├── features/
 │   ├── auth/
 │   │   ├── api/
@@ -32,13 +36,10 @@ src/
 │   │   ├── model/
 │   │   ├── ui/
 │   │   └── hooks/
-│   ├── player/
-│   │   ├── ui/
-│   │   ├── model/
-│   │   └── hooks/
-│   └── components/
-│       ├── Header/
-│       └── MyLibrary/
+│   └── player/
+│       ├── ui/
+│       ├── model/
+│       └── hooks/
 ├── shared/
 │   ├── ui/
 │   ├── lib/
