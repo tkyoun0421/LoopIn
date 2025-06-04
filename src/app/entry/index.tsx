@@ -8,7 +8,13 @@ import App from "@app/routes/App";
 
 import "@app/styles/globals.css";
 
-const queryKey = new QueryClient();
+const queryKey = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+    },
+  },
+});
 
 const root = createRoot(document.getElementById("root") as HTMLElement);
 root.render(
