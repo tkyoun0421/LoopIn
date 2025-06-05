@@ -31,10 +31,10 @@ const getSpotifyAuth = async (): Promise<void> => {
     };
 
     authUrl.search = new URLSearchParams(Object.entries(params)).toString();
-    window.location.href = authUrl.toString();
+    console.log("a", redirectUri);
+    // window.location.href = authUrl.toString();
   }
-
-  console.log(redirectUri);
+  console.log("b", redirectUri);
 };
 
 export default getSpotifyAuth;
