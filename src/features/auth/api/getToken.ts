@@ -7,13 +7,13 @@ import { GET_TOKEN_ENDPOINT, REDIRECT_URI } from "@shared/configs/env";
 
 export const getToken = async (
   code: string,
-  options?: { signal?: AbortSignal },
 ): Promise<ExchangeTokenResponse> => {
   const codeVerifier = localStorage.getItem("code_verifier");
   if (!codeVerifier) {
     throw new Error("fail to fetch code verifier.");
   }
 
+  console.log("실행1");
   const body = new URLSearchParams({
     client_id: CLIENT_ID,
     grant_type: "authorization_code",
@@ -29,7 +29,6 @@ export const getToken = async (
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      signal: options?.signal,
     },
   );
 
