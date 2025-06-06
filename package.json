@@ -25,7 +25,7 @@
     "zustand": "^5.0.5"
   },
   "scripts": {
-    "start": "webpack serve --mode development --open",
+    "start": "webpack serve --mode development --host 127.0.0.1 --open",
     "build": "webpack --mode production",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

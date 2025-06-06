@@ -11,7 +11,7 @@ import "@app/styles/globals.css";
 const queryKey = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 2,
+      retry: 5,
     },
   },
 });

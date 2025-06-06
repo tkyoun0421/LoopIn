@@ -1,7 +1,7 @@
 import { AuthUrlParams } from "@features/auth/model/auth";
 
 import { CLIENT_ID } from "@shared/configs/clientConfig";
-import { REDIRECT_URI } from "@shared/configs/env";
+import { AUTH_ENDPOINT, REDIRECT_URI } from "@shared/configs/env";
 import {
   base64encode,
   generateRandomString,
@@ -13,28 +13,25 @@ const getSpotifyAuth = async (): Promise<void> => {
   const hashed = await sha256(codeVerifier);
   const codeChallenge = base64encode(hashed);
 
-  const redirectUri = REDIRECT_URI;
-  const clientId = CLIENT_ID;
+  const isAuthParamsValid = !!CLIENT_ID && !!REDIRECT_URI;
   const scope = "user-read-private user-read-email";
-  const authUrl = new URL("https://accounts.spotify.com/authorize");
+  const authUrl = new URL(AUTH_ENDPOINT);
 
   window.localStorage.setItem("code_verifier", codeVerifier);
 
-  if (clientId && redirectUri) {
+  if (isAuthParamsValid) {
     const params: AuthUrlParams = {
       response_type: "code",
-      client_id: clientId,
-      scope,
+      client_id: CLIENT_ID,
+      scope: scope,
       code_challenge_method: "S256",
       code_challenge: codeChallenge,
-      redirect_uri: redirectUri,
+      redirect_uri: REDIRECT_URI,
     };
 
     authUrl.search = new URLSearchParams(Object.entries(params)).toString();
-    console.log("a", redirectUri);
     window.location.href = authUrl.toString();
   }
-  console.log("b", redirectUri);
 };
 
 export default getSpotifyAuth;
