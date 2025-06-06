@@ -7,15 +7,15 @@ import { CurrentUserProfileResponse } from "@features/user/model/user";
 const useGetCurrentUserProfile = (): UseQueryResult<
   CurrentUserProfileResponse | undefined
 > => {
-  const { accessToken } = useTokenStore();
+  const { access_token } = useTokenStore();
 
   return useQuery({
-    queryKey: ["current-user-profile", accessToken],
+    queryKey: ["current-user-profile", access_token],
     queryFn: () => {
-      if (!accessToken) throw new Error("No access token");
-      return getCurrentUserProfile(accessToken);
+      if (!access_token) throw new Error("No access token");
+      return getCurrentUserProfile(access_token);
     },
-    enabled: !!accessToken,
+    enabled: !!access_token,
   });
 };
 
