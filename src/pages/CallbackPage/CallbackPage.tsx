@@ -1,4 +1,4 @@
-import { JSX, useEffect } from "react";
+import { JSX, useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 
 import LoadingPage from "@pages/LoadingPage/LoadingPage";
@@ -11,6 +11,7 @@ const CallbackPage = (): JSX.Element => {
   const navigate = useNavigate();
   const code = searchParams.get("code");
   const { setToken } = useTokenStore();
+  const calledRef = useRef(false);
 
   const { mutate: exchangeToken } = useExchangeToken({
     onSuccess: data => {
@@ -23,7 +24,8 @@ const CallbackPage = (): JSX.Element => {
   });
 
   useEffect(() => {
-    if (code) {
+    if (code && !calledRef.current) {
+      calledRef.current = true;
       exchangeToken(code);
     }
   }, [code, exchangeToken, navigate]);
