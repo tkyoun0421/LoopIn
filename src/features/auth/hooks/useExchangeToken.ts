@@ -19,8 +19,7 @@ const useExchangeToken = (
       controllerRef.current?.abort();
       controllerRef.current = new AbortController();
 
-      const token = getToken(code, { signal: controllerRef.current.signal });
-      return token;
+      return getToken(code, { signal: controllerRef.current.signal });
     },
     ...options,
   });
