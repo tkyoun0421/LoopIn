@@ -12,3 +12,8 @@ export interface AuthUrlParams {
   code_challenge: string;
   redirect_uri: string;
 }
+
+export interface ExchangeTokenResponse extends ClientAuthTokenResponse {
+  refresh_token: string;
+  scope: string;
+}
