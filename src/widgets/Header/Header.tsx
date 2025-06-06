@@ -9,6 +9,7 @@ import Logo from "@shared/ui/Logo/Logo";
 
 const Header = (): JSX.Element => {
   const { access_token } = useTokenStore();
+  const isLogged = !!access_token;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[hsl(var(--border))] bg-[hsl(var(--background))] py-2 backdrop-blur supports-[backdrop-filter]:bg-[hsl(var(--background)/0.6)]">
@@ -16,7 +17,7 @@ const Header = (): JSX.Element => {
         <Logo />
         <div className="flex gap-2 align-middle">
           <ThemeToggleButton />
-          {access_token ? <UserProfile /> : <LoginButton />}
+          {isLogged ? <UserProfile /> : <LoginButton />}
         </div>
       </div>
     </header>
