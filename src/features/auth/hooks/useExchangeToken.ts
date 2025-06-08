@@ -1,4 +1,3 @@
-// hooks/useExchangeToken.ts
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 
 import { getToken } from "@features/auth/api/getToken";
