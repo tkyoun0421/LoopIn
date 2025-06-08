@@ -1,4 +1,4 @@
-import { JSX, useEffect, useRef } from "react";
+import { JSX, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 
 import LoadingPage from "@pages/LoadingPage/LoadingPage";
@@ -11,21 +11,19 @@ const CallbackPage = (): JSX.Element => {
   const navigate = useNavigate();
   const code = searchParams.get("code");
   const { setToken } = useTokenStore();
-  const calledRef = useRef(false);
 
   const { mutate: exchangeToken } = useExchangeToken({
     onSuccess: data => {
       setToken(data);
       navigate("/");
     },
-    onError: error => {
-      console.error("❌ 토큰 교환 실패:", error);
+    onError: () => {
+      navigate("/error");
     },
   });
 
   useEffect(() => {
-    if (code && !calledRef.current) {
-      calledRef.current = true;
+    if (code) {
       exchangeToken(code);
     }
   }, [code, exchangeToken, navigate]);

@@ -1,3 +1,4 @@
+// hooks/useExchangeToken.ts
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 
 import { getToken } from "@features/auth/api/getToken";
@@ -12,8 +13,8 @@ const useExchangeToken = (
   options?: UseExchangeTokenOptions,
 ): UseMutationResult<ExchangeTokenResponse, unknown, string> => {
   return useMutation<ExchangeTokenResponse, unknown, string>({
-    mutationFn: (code: string) => {
-      return getToken(code);
+    mutationFn: async (code: string) => {
+      return await getToken(code);
     },
     ...options,
   });
