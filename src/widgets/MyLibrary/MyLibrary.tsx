@@ -1,15 +1,22 @@
+import { Plus } from "lucide-react";
 import { JSX } from "react";
 
-import MyLibraryButton from "./MyLibraryButton";
-import MyLibraryPlaylistItem from "./MyLibraryPlaylistItem";
+import MyLibraryPlaylist from "@features/playlist/ui/MyLibraryPlaylist";
+
+import Button from "@shared/ui/Button/Button";
+
 import MyLibraryTitle from "./MyLibraryTitle";
 
 const MyLibrary = (): JSX.Element => {
   return (
     <div className="flex flex-col gap-3 rounded-lg bg-[hsl(var(--background))] p-4">
-      <MyLibraryTitle />
-      <MyLibraryPlaylistItem />
-      <MyLibraryButton />
+      <div className="flex items-center justify-between">
+        <MyLibraryTitle />
+        <Button size="sm" variant="secondary" className="!px-2">
+          <Plus />
+        </Button>
+      </div>
+      <MyLibraryPlaylist />
     </div>
   );
 };

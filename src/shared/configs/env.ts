@@ -14,3 +14,7 @@ export const NEW_RELEASES_ENDPOINT =
 // user
 export const CURRENT_USER_ENDPOINT =
   process.env.REACT_APP_CURRENT_USER_ENDPOINT!;
+
+// playlist
+export const CURRENT_USER_PLAYLISTS_ENDPOINT =
+  process.env.REACT_APP_CURRENT_USER_PLAYLISTS_ENDPOINT!;

@@ -1,19 +1,19 @@
-import axios from "axios";
+import { apiInstance } from "@shared/configs/api";
 
-const postCache = new Map<string, Promise<any>>();
+const postCache = new Map<string, Promise<unknown>>();
 
-export const memoizedPostRequest = (
+export const memoizedPostRequest = <T>(
   url: string,
   body: URLSearchParams,
   headers?: Record<string, string>,
-): Promise<any> => {
+): Promise<T> => {
   const cacheKey = `${url}?${body.toString()}`;
 
   if (postCache.has(cacheKey)) {
-    return postCache.get(cacheKey)!;
+    return postCache.get(cacheKey)! as Promise<T>;
   }
 
-  const request = axios
+  const request = apiInstance
     .post(url, body, { headers })
     .then(res => res.data)
     .finally(() => {

@@ -1,17 +1,8 @@
+import { ApiResponse } from "@shared/model/apiResponse";
 import { Artist, ExternalUrls, Image } from "@shared/model/sharedType";
 
-export interface AlbumsResponse {
-  albums: Albums;
-}
-
-export interface Albums {
-  href: string;
-  limit: number;
-  next: string | null;
-  offset: number;
-  previous: string | null;
-  total: number;
-  items: Album[];
+export interface GetNewReleasesResponse {
+  albums: ApiResponse<Album>;
 }
 
 export interface Album {

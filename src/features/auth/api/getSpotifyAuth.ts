@@ -2,6 +2,7 @@ import { AuthUrlParams } from "@features/auth/model/auth";
 
 import { CLIENT_ID } from "@shared/configs/clientConfig";
 import { AUTH_ENDPOINT, REDIRECT_URI } from "@shared/configs/env";
+import { SCOPES } from "@shared/configs/scope";
 import {
   base64encode,
   generateRandomString,
@@ -14,7 +15,7 @@ const getSpotifyAuth = async (): Promise<void> => {
   const codeChallenge = base64encode(hashed);
 
   const isAuthParamsValid = !!CLIENT_ID && !!REDIRECT_URI;
-  const scope = "user-read-private user-read-email";
+  const scope = SCOPES;
   const authUrl = new URL(AUTH_ENDPOINT);
 
   window.localStorage.setItem("code_verifier", codeVerifier);
