@@ -1,16 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
-interface UseIntersectionObserverProps {
-  threshold?: number;
-  root?: Element | null;
-  rootMargin?: string;
-  onIntersect?: () => void;
-}
-
-interface UseIntersectionObserverReturn {
-  targetRef: React.RefObject<HTMLDivElement | null>;
-  isIntersecting: boolean;
-}
+import {
+  UseIntersectionObserverProps,
+  UseIntersectionObserverReturn,
+} from "@shared/model/intersectionObserver";
 
 const useIntersectionObserver = ({
   threshold = 0,
