@@ -1,12 +1,14 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 import { getNewReleases } from "@features/albums/api/getNewReleases";
-import { AlbumsResponse } from "@features/albums/model/albums";
+import { GetNewReleasesResponse } from "@features/albums/model/albums";
 import useClientAuthToken from "@features/auth/hooks/useClientAuthToken";
 
 import { NEW_RELEASES_ENDPOINT } from "@shared/configs/env";
 
-const useGetNewReleases = (): UseQueryResult<AlbumsResponse | undefined> => {
+const useGetNewReleases = (): UseQueryResult<
+  GetNewReleasesResponse | undefined
+> => {
   const clientAuthToken = useClientAuthToken();
 
   return useQuery({

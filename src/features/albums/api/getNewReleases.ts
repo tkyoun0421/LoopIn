@@ -1,13 +1,13 @@
 import axios from "axios";
 
-import { AlbumsResponse } from "@features/albums/model/albums";
+import { GetNewReleasesResponse } from "@features/albums/model/albums";
 import { NEW_RELEASES_ITEM_LIMIT } from "@features/albums/model/albumsConstant";
 import { ClientAuthTokenResponse } from "@features/auth/model/auth";
 
 export const getNewReleases = async (
   endpoint: string,
   clientAuthToken: ClientAuthTokenResponse["access_token"],
-): Promise<AlbumsResponse> => {
+): Promise<GetNewReleasesResponse> => {
   try {
     const response = await axios.get(
       `${endpoint}?limit=${NEW_RELEASES_ITEM_LIMIT}`,
