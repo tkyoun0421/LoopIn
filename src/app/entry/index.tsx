@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
@@ -6,21 +6,15 @@ import { BrowserRouter } from "react-router";
 import reportWebVitals from "@app/configs/reportWebVitals";
 import App from "@app/routes/App";
 
-import "@app/styles/globals.css";
+import { queryClient } from "@shared/lib/react-query/queryClient";
 
-const queryKey = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 5,
-    },
-  },
-});
+import "@app/styles/globals.css";
 
 const root = createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <QueryClientProvider client={queryKey}>
+      <QueryClientProvider client={queryClient}>
         <App />
       </QueryClientProvider>
     </BrowserRouter>
