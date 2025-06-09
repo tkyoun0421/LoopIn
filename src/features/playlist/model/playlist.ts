@@ -6,7 +6,7 @@ export interface GetCurrentUserPlaylistsRequest {
   offset?: number;
 }
 
-export type GetCurrentUserPlaylistsResponse = ApiResponse<SimplifiedPlaylist>;
+export type GetCurrentUserPlaylistsResponse = ApiResponse<SimplifiedPlaylist[]>;
 
 export interface SimplifiedPlaylist {
   collaborative: boolean;

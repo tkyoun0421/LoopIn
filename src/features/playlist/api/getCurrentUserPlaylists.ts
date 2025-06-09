@@ -15,7 +15,6 @@ const getCurrentUserPlaylists = async ({
       params: { limit, offset },
     });
 
-    console.log("response", response.data);
     return response.data;
   } catch (error) {
     console.error(error);
