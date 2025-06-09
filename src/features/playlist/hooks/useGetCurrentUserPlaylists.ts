@@ -4,6 +4,7 @@ import {
   UseInfiniteQueryResult,
 } from "@tanstack/react-query";
 
+import { useTokenStore } from "@features/auth/store/useTokenStore";
 import getCurrentUserPlaylists from "@features/playlist/api/getCurrentUserPlaylists";
 import {
   GetCurrentUserPlaylistsRequest,
@@ -16,6 +17,8 @@ const useGetCurrentUserPlaylists = ({
   InfiniteData<GetCurrentUserPlaylistsResponse>,
   Error
 > => {
+  const access_token = useTokenStore(state => state.access_token);
+
   return useInfiniteQuery({
     queryKey: ["currentUserPlaylists"],
     queryFn: ({ pageParam }) => {
@@ -30,6 +33,7 @@ const useGetCurrentUserPlaylists = ({
       return null;
     },
     initialPageParam: 0,
+    enabled: !!access_token,
   });
 };
 

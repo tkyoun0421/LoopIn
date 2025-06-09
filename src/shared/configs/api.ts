@@ -5,13 +5,17 @@ import { useTokenStore } from "@features/auth/store/useTokenStore";
 
 export const apiInstance = axios.create();
 
-apiInstance.interceptors.request.use(config => {
-  const { access_token } = useTokenStore.getState();
-  if (access_token) {
-    config.headers.Authorization = `Bearer ${access_token}`;
-  }
-  return config;
-});
+apiInstance.interceptors.request.use(
+  config => {
+    const { access_token } = useTokenStore.getState();
+
+    if (access_token) {
+      config.headers.Authorization = `Bearer ${access_token}`;
+    }
+    return config;
+  },
+  error => Promise.reject(error),
+);
 
 apiInstance.interceptors.response.use(
   response => response,
@@ -24,8 +28,6 @@ apiInstance.interceptors.response.use(
       const { refresh_token } = useTokenStore.getState();
 
       if (!refresh_token) {
-        console.error("Refresh token이 없어 로그아웃 처리합니다.");
-        useTokenStore.getState().clearToken();
         return Promise.reject(error);
       }
 

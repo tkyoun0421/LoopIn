@@ -1,20 +1,20 @@
 import { User } from "lucide-react";
 import { JSX } from "react";
 
-import { useTokenStore } from "@features/auth/store/useTokenStore";
+import useLogout from "@features/auth/hooks/useLogout";
 import useGetCurrentUserProfile from "@features/user/hooks/useGetCurrentUserProfile";
 
 import Button from "@shared/ui/Button/Button";
 
 const UserProfile = (): JSX.Element => {
   const { data } = useGetCurrentUserProfile();
-  const { clearToken } = useTokenStore();
+  const { logout } = useLogout();
 
   const profileImageUrl = data?.images?.[0]?.url;
 
   const handleClick = () => {
     if (window.confirm("(임시 기능)로그아웃 하시겠습니까?")) {
-      clearToken();
+      logout();
     }
   };
 
