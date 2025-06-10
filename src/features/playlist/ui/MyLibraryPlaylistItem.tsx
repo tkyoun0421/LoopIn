@@ -1,5 +1,6 @@
 import { Heart } from "lucide-react";
 import { JSX } from "react";
+import { useNavigate } from "react-router";
 
 import { SimplifiedPlaylist } from "@features/playlist/model/playlist";
 
@@ -8,8 +9,17 @@ const MyLibraryPlaylistItem = ({
 }: {
   playlist: SimplifiedPlaylist;
 }): JSX.Element => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/playlist/${playlist.id}`);
+  };
+
   return (
-    <div className="bg-card flex cursor-pointer gap-3 rounded-lg border border-[hsl(var(--border)/50)] p-4 text-[hsl(var(--card-foreground))] shadow-sm transition-colors hover:bg-[hsl(var(--accent)/0.5)] dark:bg-[hsl(val(--card)/0.3)]">
+    <div
+      onClick={handleClick}
+      className="bg-card flex cursor-pointer gap-3 rounded-lg border border-[hsl(var(--border)/50)] p-4 text-[hsl(var(--card-foreground))] shadow-sm transition-colors hover:bg-[hsl(var(--accent)/0.5)] dark:bg-[hsl(val(--card)/0.3)]"
+    >
       <div className="flex-shrink-0">
         {playlist.images && playlist.images.length > 0 ? (
           <img

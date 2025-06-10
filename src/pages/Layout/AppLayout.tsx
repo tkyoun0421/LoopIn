@@ -13,8 +13,8 @@ const AppLayout = (): JSX.Element => {
         <Header />
         <div className="container flex">
           <SideBar />
-          <main className="min-h-screen flex-1 p-6">
-            <div className="max-m-7xl mx-auto">
+          <main className="min-h-screen flex-1">
+            <div className="max-m-7xl mx-auto h-full">
               <Outlet />
             </div>
           </main>
