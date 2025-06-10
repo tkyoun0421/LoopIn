@@ -9,7 +9,7 @@ import MyLibraryTitle from "./MyLibraryTitle";
 
 const MyLibrary = (): JSX.Element => {
   return (
-    <div className="flex flex-col gap-3 rounded-lg bg-[hsl(var(--background))] p-4">
+    <div className="flex min-h-0 flex-1 flex-col gap-3 rounded-lg bg-[hsl(var(--background))] p-4">
       <div className="flex items-center justify-between">
         <MyLibraryTitle />
         <Button size="sm" variant="secondary" className="!px-2">
