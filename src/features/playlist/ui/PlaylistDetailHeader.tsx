@@ -1,7 +1,11 @@
-import { Heart, User } from "lucide-react";
 import { JSX } from "react";
 
 import { Playlist } from "@features/playlist/model/playlist";
+import PlaylistDetailBackground from "@features/playlist/ui/PlaylistDetailBackground";
+import PlaylistDetailBadge from "@features/playlist/ui/PlaylistDetailBadge";
+import PlaylistDetailDescription from "@features/playlist/ui/PlaylistDetailDescription";
+import PlaylistDetailImage from "@features/playlist/ui/PlaylistDetailImage";
+import PlaylistDetailInfo from "@features/playlist/ui/PlaylistDetailInfo";
 
 const PlaylistDetailHeader = ({
   playlist,
@@ -17,46 +21,16 @@ const PlaylistDetailHeader = ({
           : "linear-gradient(to bottom right, rgb(147 51 234), rgb(236 72 153))",
       }}
     >
-      {playlist?.images?.[0] ? (
-        <>
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-lg"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/40"></div>
-        </>
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
-      )}
+      <PlaylistDetailBackground playlist={playlist} />
 
       <div className="relative z-10 flex gap-6">
-        <div className="flex h-48 w-48 shrink-0 items-center justify-center rounded-lg bg-black/20">
-          {playlist?.images?.[0] ? (
-            <img
-              src={playlist.images[0].url}
-              alt={playlist.name || "플레이리스트 커버"}
-              className="h-full w-full rounded-lg object-cover"
-            />
-          ) : (
-            <Heart size={48} color="white" />
-          )}
-        </div>
+        <PlaylistDetailImage playlist={playlist} />
         <div className="flex flex-col text-white">
-          {playlist?.type && (
-            <span className="mb-3 w-fit rounded-full bg-white/20 px-3 py-1 text-xs font-medium tracking-wide uppercase">
-              {playlist.type}
-            </span>
-          )}
+          <PlaylistDetailBadge playlist={playlist} />
           <h2 className="mb-5 text-3xl font-bold">{playlist?.name}</h2>
-          {playlist?.description && (
-            <p className="text-md mb-6">{playlist?.description}</p>
-          )}
+          <PlaylistDetailDescription playlist={playlist} />
           <div className="mt-auto flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              <User size={14} />
-              <p>{playlist?.owner.display_name}</p>
-            </div>
-            <p>{playlist?.tracks.total?.toLocaleString("ko-KR")}곡</p>
-            <p>
-              {playlist?.followers.total?.toLocaleString("ko-KR")}명이 좋아함
-            </p>
+            <PlaylistDetailInfo playlist={playlist} />
           </div>
         </div>
       </div>
