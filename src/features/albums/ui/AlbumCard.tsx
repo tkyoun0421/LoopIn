@@ -1,9 +1,7 @@
 import { JSX } from "react";
 
-import { Album } from "@features/albums/model/albums";
-
 import { formatRelativeDate } from "@shared/lib/utils/formatRelativeDate";
-import { Artist } from "@shared/model/sharedType";
+import { Album, Artist } from "@shared/model/sharedType";
 import Card from "@shared/ui/Card/Card";
 
 interface AlbumCardProps {
