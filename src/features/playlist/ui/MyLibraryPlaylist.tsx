@@ -1,4 +1,5 @@
 import { JSX } from "react";
+import React from "react";
 
 import useGetCurrentUserPlaylists from "@features/playlist/hooks/useGetCurrentUserPlaylists";
 import EmptyLibrary from "@features/playlist/ui/EmptyLibrary";
@@ -18,9 +19,11 @@ const MyLibraryPlaylist = (): JSX.Element => {
   } = useGetCurrentUserPlaylists({
     limit: 10,
   });
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   const { targetRef } = useIntersectionObserver({
     threshold: 1,
+    root: containerRef.current ?? undefined,
     rootMargin: "100px",
     onIntersect: () => {
       if (hasNextPage && !isFetchingNextPage) {
@@ -34,7 +37,10 @@ const MyLibraryPlaylist = (): JSX.Element => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col gap-2">
+      <div
+        ref={containerRef}
+        className="flex h-96 flex-col gap-2 overflow-auto"
+      >
         <PlaylistSkeleton length={5} />
       </div>
     );
@@ -45,11 +51,13 @@ const MyLibraryPlaylist = (): JSX.Element => {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div
+      ref={containerRef}
+      className="scrollbar-thin scrollbar-thumb-rounded scrollbar-thumb-gray-400 flex h-[60vh] flex-col gap-2 overflow-auto"
+    >
       {allPlaylists.map(playlist => (
         <MyLibraryPlaylistItem key={playlist.id} playlist={playlist} />
       ))}
-
       {hasNextPage && (
         <div ref={targetRef} className="flex flex-col gap-2">
           {isFetchingNextPage && <PlaylistSkeleton length={3} />}
