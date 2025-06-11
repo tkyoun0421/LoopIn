@@ -1,5 +1,7 @@
 import { JSX } from "react";
 
+import PlaylistTracksTableSkeleton from "@features/playlist/ui/PlaylistTracksTable/PlaylistTracksTableSkeleton";
+
 import { Skeleton } from "@shared/ui/Skeleton/Skeleton";
 
 const PlaylistDetailSkeleton = (): JSX.Element => {
@@ -28,19 +30,8 @@ const PlaylistDetailSkeleton = (): JSX.Element => {
           </div>
         </div>
       </section>
-      <section className="p-6">
-        <div className="space-y-3">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <div key={index} className="flex items-center gap-4">
-              <Skeleton className="h-12 w-12" />
-              <div className="flex-1">
-                <Skeleton className="mb-1 h-4 w-48" />
-                <Skeleton className="h-3 w-32" />
-              </div>
-              <Skeleton className="h-4 w-12" />
-            </div>
-          ))}
-        </div>
+      <section>
+        <PlaylistTracksTableSkeleton rows={5} />
       </section>
     </div>
   );

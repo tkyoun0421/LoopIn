@@ -1,9 +1,15 @@
 import { ApiResponse } from "@shared/model/apiResponse";
 import {
+  Album,
+  Artist,
+  ExternalIds,
   ExternalUrls,
   Followers,
   Image,
   Owner,
+  Restrictions,
+  ResumePoint,
+  Show,
   Tracks,
 } from "@shared/model/sharedType";
 
@@ -55,52 +61,29 @@ export interface PlaylistItem {
 }
 
 export interface PlaylistTrack {
-  href?: string;
-  items: PlaylistItem[];
-  limit?: number;
+  href: string;
+  limit: number;
   next?: string;
-  offset?: number;
+  offset: number;
   previous?: string;
   total?: number;
+  items: PlaylistItem[];
 }
 
 export interface Track {
-  album: {
-    album_type: string;
-    total_tracks: number;
-    available_markets: string[];
-    external_urls: ExternalUrls;
-    href: string;
-    id: string;
-    images: Image[];
-    name: string;
-    release_date: string;
-    release_date_precision: string;
-    restrictions?: {
-      reason: string;
-    };
-    type: string;
-    uri: string;
-    artists: Artist[];
-  };
+  album: Album;
   artists: Artist[];
   available_markets: string[];
   disc_number: number;
   duration_ms: number;
   explicit: boolean;
-  external_ids: {
-    isrc?: string;
-    ean?: string;
-    upc?: string;
-  };
+  external_ids: ExternalIds;
   external_urls: ExternalUrls;
   href: string;
   id: string;
   is_playable: boolean;
   linked_from?: object;
-  restrictions?: {
-    reason: string;
-  };
+  restrictions?: Restrictions;
   name: string;
   popularity: number;
   preview_url: string | null;
@@ -110,11 +93,36 @@ export interface Track {
   is_local: boolean;
 }
 
-export interface Artist {
-  external_urls: ExternalUrls;
-  href: string;
-  id: string;
-  name: string;
-  type: string;
-  uri: string;
+export interface TrackObject
+  extends Omit<Track, "linked_from" | "uri" | "restrictions" | "preview_url"> {
+  linked_from: {};
+  restrictions: Restrictions;
+  preview_url?: string | null;
+  url: string;
+}
+
+export interface EpisodeObject
+  extends Pick<
+    Track,
+    | "external_urls"
+    | "href"
+    | "id"
+    | "name"
+    | "type"
+    | "explicit"
+    | "is_playable"
+    | "duration_ms"
+  > {
+  audio_preview_url?: string | null;
+  description: string;
+  html_description: string;
+  images: Image[];
+  is_externally_hosted: boolean;
+  language: string;
+  languages: string[];
+  release_date: string;
+  release_date_precision: string;
+  resume_point: ResumePoint;
+  restrictions: Restrictions;
+  show: Show;
 }

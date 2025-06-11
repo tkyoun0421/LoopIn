@@ -1,22 +1,42 @@
 import { JSX } from "react";
 
 import useGetPlaylist from "@features/playlist/hooks/useGetPlaylist";
-import PlaylistDetailHeader from "@features/playlist/ui/PlaylistDetailHeader";
-import PlaylistDetailSkeleton from "@features/playlist/ui/PlaylistDetailSkeleton";
+import useGetPlaylistItems from "@features/playlist/hooks/useGetPlaylistItems";
+import PlaylistDetailHeader from "@features/playlist/ui/PlaylistDetail/PlaylistDetailHeader";
+import PlaylistDetailSkeleton from "@features/playlist/ui/PlaylistDetail/PlaylistDetailSkeleton";
+import PlaylistTracksTable from "@features/playlist/ui/PlaylistTracksTable/PlaylistTracksTable";
 
 const PlaylistDetailPage = (): JSX.Element => {
-  const { data: playlist, isLoading } = useGetPlaylist();
+  const { data: playlist, isLoading: isPlaylistLoading } = useGetPlaylist();
+  const {
+    data,
+    fetchNextPage,
+    isLoading: isTrackLoading,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetPlaylistItems();
 
-  console.log("playlist: ", playlist);
+  const tracks = data?.pages.flatMap(page => page.items);
 
-  if (isLoading) {
-    return <PlaylistDetailSkeleton />;
+  if (isPlaylistLoading || isTrackLoading) {
+    return (
+      <>
+        <PlaylistDetailSkeleton />
+      </>
+    );
   }
 
   return (
     <div className="h-full bg-[hsl(var(--secondary))]">
       {playlist && <PlaylistDetailHeader playlist={playlist} />}
-      <section className="p-6"></section>
+      {tracks && (
+        <PlaylistTracksTable
+          tracks={tracks}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage || false}
+          isFetchingNextPage={isFetchingNextPage}
+        />
+      )}
     </div>
   );
 };
