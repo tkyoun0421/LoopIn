@@ -13,16 +13,16 @@ import {
   Tracks,
 } from "@shared/model/sharedType";
 
-export interface GetCurrentUserPlaylistsRequest {
+export type GetCurrentUserPlaylistsRequest = {
   limit?: number;
   offset?: number;
-}
+};
 
 export type GetCurrentUserPlaylistsResponse = ApiResponse<SimplifiedPlaylist[]>;
 
-export interface SimplifiedPlaylist extends BasePlayList {
+export type SimplifiedPlaylist = BasePlayList & {
   tracks: Tracks;
-}
+};
 
 export interface BasePlayList {
   collaborative: boolean;
@@ -44,7 +44,7 @@ export interface Playlist extends BasePlayList {
   followers: Followers;
 }
 
-export interface PlaylistItem {
+export type PlaylistItem = {
   added_at: string;
   added_by: {
     external_urls: ExternalUrls;
@@ -58,9 +58,9 @@ export interface PlaylistItem {
   video_thumbnail: {
     url: string | null;
   };
-}
+};
 
-export interface PlaylistTrack {
+export type PlaylistTrack = {
   href: string;
   limit: number;
   next?: string;
@@ -68,7 +68,7 @@ export interface PlaylistTrack {
   previous?: string;
   total?: number;
   items: PlaylistItem[];
-}
+};
 
 export interface Track {
   album: Album;
