@@ -18,6 +18,8 @@ const getPlaylistItems = async ({
       `https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=${limit}&offset=${offset}`,
     );
 
+    console.log("response: ", response.data);
+
     return response.data;
   } catch (error) {
     console.error(error);

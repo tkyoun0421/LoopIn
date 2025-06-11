@@ -1,6 +1,11 @@
 import { Clock, Play } from "lucide-react";
 import { JSX } from "react";
 
+import {
+  getAlbumName,
+  getArtistNames,
+  getTrackImage,
+} from "@features/playlist/lib/trackUtils";
 import { PlaylistItem } from "@features/playlist/model/playlist";
 
 import useIntersectionObserver from "@shared/hooks/useIntersectionObserver";
@@ -60,60 +65,64 @@ const PlaylistTracksTable = ({
       <div className="scrollbar-hide flex-1 overflow-y-auto">
         <Table>
           <TableBody>
-            {tracks.map((item, index) => (
-              <TableRow
-                key={`${item.track.id}-${index}`}
-                className="group cursor-pointer"
-              >
-                <TableCell className="w-16 px-4 text-center">
-                  <div className="flex items-center justify-center">
-                    <span className="text-[hsl(var(--muted-foreground))] group-hover:hidden">
-                      {index + 1}
-                    </span>
-                    <Play
-                      size={16}
-                      className="hidden fill-current text-[hsl(var(--foreground))] group-hover:block"
-                    />
-                  </div>
-                </TableCell>
+            {tracks.map((item, index) => {
+              const trackImage = getTrackImage(item.track);
+              const artistNames = getArtistNames(item.track);
+              const albumName = getAlbumName(item.track);
 
-                <TableCell className="px-4">
-                  <div className="flex items-center gap-3">
-                    {item.track.album.images[0] && (
-                      <img
-                        src={item.track.album.images[0].url}
-                        alt={item.track.album.name}
-                        className="h-10 w-10 rounded object-cover"
+              return (
+                <TableRow
+                  key={`${item.track.id}-${index}`}
+                  className="group cursor-pointer"
+                >
+                  <TableCell className="w-16 px-4 text-center">
+                    <div className="flex items-center justify-center">
+                      <span className="text-[hsl(var(--muted-foreground))] group-hover:hidden">
+                        {index + 1}
+                      </span>
+                      <Play
+                        size={16}
+                        className="hidden fill-current text-[hsl(var(--foreground))] group-hover:block"
                       />
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <div className="truncate font-medium text-[hsl(var(--foreground))]">
-                        {item.track.name}
-                      </div>
-                      <div className="truncate text-sm text-[hsl(var(--muted-foreground))]">
-                        {item.track.artists
-                          .map(artist => artist.name)
-                          .join(", ")}
+                    </div>
+                  </TableCell>
+
+                  <TableCell className="px-4">
+                    <div className="flex items-center gap-3">
+                      {trackImage && (
+                        <img
+                          src={trackImage}
+                          alt={albumName}
+                          className="h-10 w-10 rounded object-cover"
+                        />
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate font-medium text-[hsl(var(--foreground))]">
+                          {item.track.name}
+                        </div>
+                        <div className="truncate text-sm text-[hsl(var(--muted-foreground))]">
+                          {artistNames}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </TableCell>
+                  </TableCell>
 
-                <TableCell className="hidden px-4 text-[hsl(var(--muted-foreground))] lg:table-cell">
-                  <div className="truncate">{item.track.album.name}</div>
-                </TableCell>
+                  <TableCell className="hidden px-4 text-[hsl(var(--muted-foreground))] lg:table-cell">
+                    <div className="truncate">{albumName}</div>
+                  </TableCell>
 
-                <TableCell className="hidden px-4 text-center text-[hsl(var(--muted-foreground))] md:table-cell">
-                  <div className="whitespace-nowrap">
-                    {formatToYYYYMMDD(item.added_at)}
-                  </div>
-                </TableCell>
+                  <TableCell className="hidden px-4 text-center text-[hsl(var(--muted-foreground))] md:table-cell">
+                    <div className="whitespace-nowrap">
+                      {formatToYYYYMMDD(item.added_at)}
+                    </div>
+                  </TableCell>
 
-                <TableCell className="w-20 px-4 text-center text-[hsl(var(--muted-foreground))]">
-                  {formatDuration(item.track.duration_ms)}
-                </TableCell>
-              </TableRow>
-            ))}
+                  <TableCell className="w-20 px-4 text-center text-[hsl(var(--muted-foreground))]">
+                    {formatDuration(item.track.duration_ms)}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
 
