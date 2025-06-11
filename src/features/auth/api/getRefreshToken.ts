@@ -33,7 +33,7 @@ export const getRefreshToken = async (): Promise<void> => {
       refresh_token: newRefreshToken,
       scope,
       token_type,
-      express_in,
+      expires_in,
     } = response.data;
 
     useTokenStore.getState().setToken({
@@ -41,7 +41,7 @@ export const getRefreshToken = async (): Promise<void> => {
       refresh_token: newRefreshToken || refresh_token,
       scope: scope || "",
       token_type: token_type || "Bearer",
-      express_in: express_in || 3600,
+      expires_in: expires_in || 3600,
     });
   } catch (error) {
     console.error("토큰 갱신 실패:", error);
