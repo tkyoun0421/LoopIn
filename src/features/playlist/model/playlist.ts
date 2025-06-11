@@ -54,7 +54,7 @@ export interface PlaylistItem {
     uri: string;
   };
   is_local: boolean;
-  track: Track;
+  track: TrackObject | EpisodeObject;
   video_thumbnail: {
     url: string | null;
   };
@@ -126,3 +126,5 @@ export interface EpisodeObject
   restrictions: Restrictions;
   show: Show;
 }
+
+export type GetPlaylistItemsResponse = ApiResponse<PlaylistItem>;

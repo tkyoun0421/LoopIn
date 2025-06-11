@@ -10,7 +10,7 @@ interface GetPlaylistItemsParams {
 
 const getPlaylistItems = async ({
   playlistId,
-  limit = 20,
+  limit = 10,
   offset = 0,
 }: GetPlaylistItemsParams): Promise<PlaylistTrack> => {
   try {

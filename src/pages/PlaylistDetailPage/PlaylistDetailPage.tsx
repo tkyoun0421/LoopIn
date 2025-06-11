@@ -2,6 +2,7 @@ import { JSX } from "react";
 
 import useGetPlaylist from "@features/playlist/hooks/useGetPlaylist";
 import useGetPlaylistItems from "@features/playlist/hooks/useGetPlaylistItems";
+import PlaylistDetailEmpty from "@features/playlist/ui/PlaylistDetail/PlaylistDetailEmpty";
 import PlaylistDetailHeader from "@features/playlist/ui/PlaylistDetail/PlaylistDetailHeader";
 import PlaylistDetailSkeleton from "@features/playlist/ui/PlaylistDetail/PlaylistDetailSkeleton";
 import PlaylistTracksTable from "@features/playlist/ui/PlaylistTracksTable/PlaylistTracksTable";
@@ -29,13 +30,15 @@ const PlaylistDetailPage = (): JSX.Element => {
   return (
     <div className="h-full bg-[hsl(var(--secondary))]">
       {playlist && <PlaylistDetailHeader playlist={playlist} />}
-      {tracks && (
+      {tracks && tracks.length > 0 ? (
         <PlaylistTracksTable
           tracks={tracks}
           fetchNextPage={fetchNextPage}
           hasNextPage={hasNextPage || false}
           isFetchingNextPage={isFetchingNextPage}
         />
+      ) : (
+        <PlaylistDetailEmpty playlistName={playlist?.name} />
       )}
     </div>
   );
