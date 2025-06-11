@@ -22,8 +22,6 @@ export const getRefreshToken = async (): Promise<void> => {
   });
 
   try {
-    console.log("리프레쉬 토큰 실행", refresh_token);
-
     const response = await axios.post(url, params, {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -45,10 +43,8 @@ export const getRefreshToken = async (): Promise<void> => {
       token_type: token_type || "Bearer",
       express_in: express_in || 3600,
     });
-
-    console.log("토큰 갱신 성공");
   } catch (error) {
     console.error("토큰 갱신 실패:", error);
-    throw error;
+    throw new Error("토큰 갱신 실패");
   }
 };
