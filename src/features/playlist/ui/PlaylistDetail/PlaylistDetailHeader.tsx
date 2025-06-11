@@ -1,11 +1,11 @@
 import { JSX } from "react";
 
 import { Playlist } from "@features/playlist/model/playlist";
-import PlaylistDetailBackground from "@features/playlist/ui/PlaylistDetailBackground";
-import PlaylistDetailBadge from "@features/playlist/ui/PlaylistDetailBadge";
-import PlaylistDetailDescription from "@features/playlist/ui/PlaylistDetailDescription";
-import PlaylistDetailImage from "@features/playlist/ui/PlaylistDetailImage";
-import PlaylistDetailInfo from "@features/playlist/ui/PlaylistDetailInfo";
+import PlaylistDetailBackground from "@features/playlist/ui/PlaylistDetail/PlaylistDetailBackground";
+import PlaylistDetailBadge from "@features/playlist/ui/PlaylistDetail/PlaylistDetailBadge";
+import PlaylistDetailDescription from "@features/playlist/ui/PlaylistDetail/PlaylistDetailDescription";
+import PlaylistDetailImage from "@features/playlist/ui/PlaylistDetail/PlaylistDetailImage";
+import PlaylistDetailInfo from "@features/playlist/ui/PlaylistDetail/PlaylistDetailInfo";
 
 const PlaylistDetailHeader = ({
   playlist,
@@ -16,7 +16,7 @@ const PlaylistDetailHeader = ({
     <section
       className="relative bg-cover bg-center bg-no-repeat p-6"
       style={{
-        backgroundImage: playlist?.images?.[0]
+        backgroundImage: playlist.images?.[0]
           ? `url(${playlist.images[0].url})`
           : "linear-gradient(to bottom right, rgb(147 51 234), rgb(236 72 153))",
       }}

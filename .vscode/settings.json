@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["ACMRTUXB", "eslintcache", "TTFB"],
+  "cSpell.words": ["ACMRTUXB", "eslintcache", "isrc", "TTFB"],
   "css.lint.unknownAtRules": "ignore",
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.suggest.autoImports": true,

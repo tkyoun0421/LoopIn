@@ -7,7 +7,6 @@ const getPlaylist = async (id: string): Promise<Playlist> => {
   try {
     const response = await apiInstance.get(`${GET_PLAYLIST_ENDPOINT}/${id}`);
 
-    console.log("response: ", response.data);
     return response.data;
   } catch (error) {
     console.error(error);

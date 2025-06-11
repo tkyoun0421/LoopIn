@@ -16,7 +16,9 @@ const MyLibrary = (): JSX.Element => {
           <Plus />
         </Button>
       </div>
-      <MyLibraryPlaylist />
+      <div className="scrollbar-hide min-h-0 flex-1 overflow-auto">
+        <MyLibraryPlaylist />
+      </div>
     </div>
   );
 };

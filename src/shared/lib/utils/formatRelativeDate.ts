@@ -4,7 +4,7 @@ interface TimeUnit {
   format: (value: number) => string;
 }
 
-export function formatRelativeDate(dateString: string): string {
+export const formatRelativeDate = (dateString: string): string => {
   const inputDate = new Date(dateString);
   const now = new Date();
   const diffInMs = now.getTime() - inputDate.getTime();
@@ -53,4 +53,4 @@ export function formatRelativeDate(dateString: string): string {
   );
 
   return `${years}년${months > 0 ? ` ${months}개월` : ""} 전`;
-}
+};

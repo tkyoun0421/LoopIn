@@ -84,14 +84,10 @@ body {
   margin-inline: auto;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-  background: transparent;
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-::-webkit-scrollbar-thumb {
-  background: #bdbdbd;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #888;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
