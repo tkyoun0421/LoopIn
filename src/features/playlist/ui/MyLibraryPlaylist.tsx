@@ -1,14 +1,18 @@
-import { JSX } from "react";
-import React from "react";
+import { JSX, useRef } from "react";
 
+import getSpotifyAuth from "@features/auth/api/getSpotifyAuth";
+import { useTokenStore } from "@features/auth/store/useTokenStore";
 import useGetCurrentUserPlaylists from "@features/playlist/hooks/useGetCurrentUserPlaylists";
 import EmptyLibrary from "@features/playlist/ui/EmptyLibrary";
 import MyLibraryPlaylistItem from "@features/playlist/ui/MyLibraryPlaylistItem";
+import PlaylistAuthPrompt from "@features/playlist/ui/PlaylistAuthPrompt/PlaylistAuthPrompt";
 import PlaylistSkeleton from "@features/playlist/ui/PlaylistSkeleton";
 
 import useIntersectionObserver from "@shared/hooks/useIntersectionObserver";
 
 const MyLibraryPlaylist = (): JSX.Element => {
+  const { access_token } = useTokenStore();
+
   const {
     data,
     isLoading,
@@ -19,8 +23,8 @@ const MyLibraryPlaylist = (): JSX.Element => {
   } = useGetCurrentUserPlaylists({
     limit: 10,
   });
-  const containerRef = React.useRef<HTMLDivElement>(null);
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const { targetRef } = useIntersectionObserver({
     threshold: 1,
     root: containerRef.current ?? undefined,
@@ -31,6 +35,15 @@ const MyLibraryPlaylist = (): JSX.Element => {
       }
     },
   });
+
+  if (!access_token) {
+    return (
+      <PlaylistAuthPrompt
+        playlistName="내 라이브러리"
+        onLoginClick={getSpotifyAuth}
+      />
+    );
+  }
 
   const pages = data?.pages || [];
   const allPlaylists = pages.flatMap(page => page.items).flat() ?? [];

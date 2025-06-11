@@ -9,6 +9,7 @@ const CallbackPage = lazy(() => import("@pages/CallbackPage/CallbackPage"));
 const PlaylistDetailPage = lazy(
   () => import("@pages/PlaylistDetailPage/PlaylistDetailPage"),
 );
+const ErrorPage = lazy(() => import("@pages/ErrorPage/ErrorPage"));
 
 const App = (): JSX.Element => {
   return (
@@ -19,6 +20,7 @@ const App = (): JSX.Element => {
         <Route path="playlist/:id" element={<PlaylistDetailPage />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
+      <Route path="error" element={<ErrorPage />} />
       <Route path="/callback" element={<CallbackPage />} />
     </Routes>
   );

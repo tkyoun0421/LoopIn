@@ -5,6 +5,15 @@ import { useTokenStore } from "@features/auth/store/useTokenStore";
 
 export const apiInstance = axios.create();
 
+// 로그아웃 처리 함수 (Router 외부에서 사용 가능)
+const handleLogout = () => {
+  console.log("인증 실패로 인한 로그아웃 처리");
+  useTokenStore.getState().clearToken();
+
+  // Router 컨텍스트 외부이므로 window.location 사용
+  window.location.href = "/";
+};
+
 apiInstance.interceptors.request.use(
   config => {
     const { access_token } = useTokenStore.getState();
@@ -29,8 +38,7 @@ apiInstance.interceptors.response.use(
 
       if (!refresh_token) {
         console.log("refresh_token이 없어 로그아웃 처리");
-        useTokenStore.getState().clearToken();
-        window.location.href = "/";
+        handleLogout();
         return Promise.reject(error);
       }
 
@@ -48,8 +56,7 @@ apiInstance.interceptors.response.use(
         }
       } catch (refreshError) {
         console.error("토큰 갱신 실패, 로그아웃 처리:", refreshError);
-        useTokenStore.getState().clearToken();
-        window.location.href = "/";
+        handleLogout();
         return Promise.reject(refreshError);
       }
     }
