@@ -28,6 +28,9 @@ apiInstance.interceptors.response.use(
       const { refresh_token } = useTokenStore.getState();
 
       if (!refresh_token) {
+        console.log("refresh_token이 없어 로그아웃 처리");
+        useTokenStore.getState().clearToken();
+        window.location.href = "/";
         return Promise.reject(error);
       }
 
@@ -46,6 +49,7 @@ apiInstance.interceptors.response.use(
       } catch (refreshError) {
         console.error("토큰 갱신 실패, 로그아웃 처리:", refreshError);
         useTokenStore.getState().clearToken();
+        window.location.href = "/";
         return Promise.reject(refreshError);
       }
     }
