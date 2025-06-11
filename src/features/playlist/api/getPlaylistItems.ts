@@ -10,15 +10,13 @@ interface GetPlaylistItemsParams {
 
 const getPlaylistItems = async ({
   playlistId,
-  limit = 20,
+  limit = 10,
   offset = 0,
 }: GetPlaylistItemsParams): Promise<PlaylistTrack> => {
   try {
     const response = await apiInstance.get(
       `https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=${limit}&offset=${offset}`,
     );
-
-    console.log("response: ", response.data);
 
     return response.data;
   } catch (error) {
