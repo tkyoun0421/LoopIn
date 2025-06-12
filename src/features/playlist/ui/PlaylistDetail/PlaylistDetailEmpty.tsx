@@ -23,8 +23,8 @@ const PlaylistDetailEmpty = ({
   };
 
   return (
-    <section className="flex min-h-[60vh] flex-col items-center justify-center px-8 py-12">
-      <div className="mx-auto max-w-md text-center">
+    <section className="flex min-h-[60vh] min-w-full flex-col items-center justify-center px-8 py-12">
+      <div className="mx-auto w-full max-w-xl min-w-[200px] text-center">
         <div className="mb-8 space-y-3">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             {josa(playlistName, "이/가")} 비어있어요

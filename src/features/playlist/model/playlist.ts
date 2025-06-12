@@ -128,3 +128,14 @@ export interface EpisodeObject
 }
 
 export type GetPlaylistItemsResponse = ApiResponse<PlaylistItem>;
+
+export type PlaylistFormData = {
+  name: string;
+  description?: string;
+  public: boolean;
+  collaborative?: boolean;
+};
+
+export type PlaylistFormErrors = Partial<
+  Record<keyof PlaylistFormData, string>
+>;

@@ -5,6 +5,7 @@ import useGetPlaylistItems from "@features/playlist/hooks/useGetPlaylistItems";
 import PlaylistDetailEmpty from "@features/playlist/ui/PlaylistDetail/PlaylistDetailEmpty";
 import PlaylistDetailHeader from "@features/playlist/ui/PlaylistDetail/PlaylistDetailHeader";
 import PlaylistDetailSkeleton from "@features/playlist/ui/PlaylistDetail/PlaylistDetailSkeleton";
+import PlaylistNotFound from "@features/playlist/ui/PlaylistNotFound/PlaylistNotFound";
 import PlaylistTracksTable from "@features/playlist/ui/PlaylistTracksTable/PlaylistTracksTable";
 
 const PlaylistDetailPage = (): JSX.Element => {
@@ -13,6 +14,7 @@ const PlaylistDetailPage = (): JSX.Element => {
     data,
     fetchNextPage,
     isLoading: isTrackLoading,
+    isError: isTrackError,
     hasNextPage,
     isFetchingNextPage,
   } = useGetPlaylistItems();
@@ -25,6 +27,10 @@ const PlaylistDetailPage = (): JSX.Element => {
         <PlaylistDetailSkeleton />
       </>
     );
+  }
+
+  if (isTrackError) {
+    return <PlaylistNotFound />;
   }
 
   return (
