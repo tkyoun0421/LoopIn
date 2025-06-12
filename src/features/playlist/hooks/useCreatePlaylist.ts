@@ -17,7 +17,7 @@ const useCreatePlaylist = (): UseMutationResult<
     mutationKey: ["createPlaylist"],
     mutationFn: (data: PlaylistFormData) => {
       if (!user) {
-        throw new Error("사용자 정보를 불러오는데 실패했습니다.");
+        throw new Error("사용자 정보를 불러오는데 실패했습니다");
       }
       return createPlaylist(data, user.id);
     },

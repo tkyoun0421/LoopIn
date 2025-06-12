@@ -1,5 +1,4 @@
-import { PlaylistFormData } from "@features/playlist/hooks/useCreatePlaylistModal";
-import { Playlist } from "@features/playlist/model/playlist";
+import { Playlist, PlaylistFormData } from "@features/playlist/model/playlist";
 
 import { apiInstance } from "@shared/configs/api";
 
