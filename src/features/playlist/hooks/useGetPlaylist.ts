@@ -18,7 +18,7 @@ const useGetPlaylist = (): UseQueryResult<Playlist, Error> => {
       return getPlaylist(id);
     },
     enabled: !!id && !!access_token,
-    retry: false, // 인증 오류 시 재시도 방지
+    retry: false,
   });
 };
 
