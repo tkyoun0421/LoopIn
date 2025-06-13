@@ -5,11 +5,16 @@ import useGetPlaylistItems from "@features/playlist/hooks/useGetPlaylistItems";
 import PlaylistDetailEmpty from "@features/playlist/ui/PlaylistDetail/PlaylistDetailEmpty";
 import PlaylistDetailHeader from "@features/playlist/ui/PlaylistDetail/PlaylistDetailHeader";
 import PlaylistDetailSkeleton from "@features/playlist/ui/PlaylistDetail/PlaylistDetailSkeleton";
+import PlaylistLoginRequired from "@features/playlist/ui/PlaylistLoginRequired/PlaylistLoginRequired";
 import PlaylistNotFound from "@features/playlist/ui/PlaylistNotFound/PlaylistNotFound";
 import PlaylistTracksTable from "@features/playlist/ui/PlaylistTracksTable/PlaylistTracksTable";
 
 const PlaylistDetailPage = (): JSX.Element => {
-  const { data: playlist, isLoading: isPlaylistLoading } = useGetPlaylist();
+  const {
+    data: playlist,
+    isLoading: isPlaylistLoading,
+    isError: isPlaylistError,
+  } = useGetPlaylist();
   const {
     data,
     fetchNextPage,
@@ -31,6 +36,10 @@ const PlaylistDetailPage = (): JSX.Element => {
 
   if (isTrackError) {
     return <PlaylistNotFound />;
+  }
+
+  if (isPlaylistError) {
+    return <PlaylistLoginRequired />;
   }
 
   return (
