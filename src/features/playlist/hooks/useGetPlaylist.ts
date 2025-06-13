@@ -17,7 +17,7 @@ const useGetPlaylist = (): UseQueryResult<Playlist, Error> => {
       if (!access_token) throw new Error("Access token is required");
       return getPlaylist(id);
     },
-    enabled: !!id && !!access_token,
+    enabled: !!id,
     retry: false,
   });
 };
