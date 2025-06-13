@@ -1,7 +1,8 @@
 import { Clock } from "lucide-react";
 import { memo, useMemo } from "react";
 
-import type { Track } from "@features/playlist/model/playlist";
+import type { TrackObject } from "@features/playlist/model/playlist";
+import SearchResultRow from "@features/playlist/ui/PlaylistDetail/PlaylistSearch/SearchResultRow";
 
 import useIntersectionObserver from "@shared/hooks/useIntersectionObserver";
 import {
@@ -12,14 +13,12 @@ import {
   TableRow,
 } from "@shared/ui/Table/Table";
 
-import SearchResultRow from "./SearchResultRow";
-
-interface SearchResultsTableProps {
-  tracks: Track[];
+type SearchResultsTableProps = {
+  tracks: TrackObject[];
   onLoadMore: () => void;
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
-}
+};
 
 const SearchResultsTable = memo<SearchResultsTableProps>(
   ({ tracks, onLoadMore, hasNextPage = false, isFetchingNextPage = false }) => {
@@ -29,7 +28,6 @@ const SearchResultsTable = memo<SearchResultsTableProps>(
           onLoadMore();
         }
       },
-      threshold: 0.1,
     });
 
     const EmptyMessage = useMemo(

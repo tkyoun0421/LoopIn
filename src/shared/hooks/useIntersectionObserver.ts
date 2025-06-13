@@ -6,7 +6,7 @@ import {
 } from "@shared/model/intersectionObserver";
 
 const useIntersectionObserver = ({
-  threshold = 0,
+  threshold = 0.1,
   root = null,
   rootMargin = "0px",
   onIntersect,

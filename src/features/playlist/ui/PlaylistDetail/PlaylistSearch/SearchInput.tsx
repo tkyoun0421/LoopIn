@@ -3,12 +3,12 @@ import { memo, useCallback, useEffect, useState } from "react";
 
 import Input from "@shared/ui/Input/Input";
 
-interface SearchInputProps {
+type SearchInputProps = {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
   debounceMs?: number;
-}
+};
 
 const SearchInput = memo<SearchInputProps>(
   ({
