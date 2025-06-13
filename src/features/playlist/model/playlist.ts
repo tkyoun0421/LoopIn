@@ -2,6 +2,7 @@ import { ApiResponse } from "@shared/model/apiResponse";
 import {
   Album,
   Artist,
+  Copyrights,
   ExternalIds,
   ExternalUrls,
   Followers,
@@ -139,3 +140,27 @@ export type PlaylistFormData = {
 export type PlaylistFormErrors = Partial<
   Record<keyof PlaylistFormData, string>
 >;
+
+export type SimplifiedEpisode = Omit<EpisodeObject, "show">;
+
+export type Audiobook = {
+  authors: { name: string }[];
+  available_markets: string[];
+  copyrights: Copyrights;
+  description: string;
+  html_description: string;
+  edition?: string;
+  explicit: boolean;
+  external_urls: ExternalUrls;
+  href: string;
+  id: string;
+  images: Image[];
+  languages: string[];
+  media_type: string;
+  name: string;
+  narrators: { name: string }[];
+  publisher: string;
+  type: "audiobook";
+  uri: string;
+  total_chapters: number;
+};

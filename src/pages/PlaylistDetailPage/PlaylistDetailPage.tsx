@@ -14,6 +14,7 @@ const PlaylistDetailPage = (): JSX.Element => {
     data: playlist,
     isLoading: isPlaylistLoading,
     isError: isPlaylistError,
+    error,
   } = useGetPlaylist();
   const {
     data,
@@ -38,7 +39,7 @@ const PlaylistDetailPage = (): JSX.Element => {
     return <PlaylistNotFound />;
   }
 
-  if (isPlaylistError) {
+  if (isPlaylistError && error?.message === "Access token is required") {
     return <PlaylistLoginRequired />;
   }
 
