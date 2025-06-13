@@ -2,7 +2,7 @@ import {
   Audiobook,
   Playlist,
   SimplifiedEpisode,
-  Track,
+  TrackObject,
 } from "@features/playlist/model/playlist";
 
 import { ApiResponse } from "@shared/model/apiResponse";
@@ -31,7 +31,7 @@ export type SearchResponse = {
   artists?: ApiResponse<Artist>;
   albums?: ApiResponse<Album>;
   playlists?: ApiResponse<Playlist>;
-  tracks?: ApiResponse<Track>;
+  tracks?: ApiResponse<TrackObject>;
   shows?: ApiResponse<Show>;
   episodes?: ApiResponse<SimplifiedEpisode>;
   audiobooks?: ApiResponse<Audiobook>;
