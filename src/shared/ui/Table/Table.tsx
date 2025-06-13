@@ -70,7 +70,7 @@ export const TableRow = ({
 };
 
 interface TableHeadProps {
-  children: ReactNode;
+  children?: ReactNode;
   className?: string;
 }
 
