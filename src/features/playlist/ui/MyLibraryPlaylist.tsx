@@ -1,4 +1,4 @@
-import { JSX, useRef } from "react";
+import { JSX, useCallback, useRef } from "react";
 
 import getSpotifyAuth from "@features/auth/api/getSpotifyAuth";
 import { useTokenStore } from "@features/auth/store/useTokenStore";
@@ -25,16 +25,20 @@ const MyLibraryPlaylist = (): JSX.Element => {
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleIntersect = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
   const { targetRef } = useIntersectionObserver({
-    threshold: 1,
-    root: containerRef.current ?? undefined,
+    root: null,
     rootMargin: "100px",
-    onIntersect: () => {
-      if (hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
-    },
+    onIntersect: handleIntersect,
   });
+  const pages = data?.pages || [];
+  const allPlaylists = pages.flatMap(page => page.items).flat() ?? [];
 
   if (!access_token) {
     return (
@@ -44,9 +48,6 @@ const MyLibraryPlaylist = (): JSX.Element => {
       />
     );
   }
-
-  const pages = data?.pages || [];
-  const allPlaylists = pages.flatMap(page => page.items).flat() ?? [];
 
   if (isLoading) {
     return (
@@ -71,11 +72,9 @@ const MyLibraryPlaylist = (): JSX.Element => {
       {allPlaylists.map(playlist => (
         <MyLibraryPlaylistItem key={playlist.id} playlist={playlist} />
       ))}
-      {hasNextPage && (
-        <div ref={targetRef} className="flex flex-col gap-2">
-          {isFetchingNextPage && <PlaylistSkeleton length={3} />}
-        </div>
-      )}
+      <div ref={targetRef} className="flex flex-col gap-2">
+        {hasNextPage && isFetchingNextPage && <PlaylistSkeleton length={3} />}
+      </div>
     </div>
   );
 };
