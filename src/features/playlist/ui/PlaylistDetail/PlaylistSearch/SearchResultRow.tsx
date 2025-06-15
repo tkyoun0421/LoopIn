@@ -1,6 +1,7 @@
 import { Play, Plus } from "lucide-react";
 import { memo, useCallback, useMemo } from "react";
 
+import useAddItemToPlaylist from "@features/playlist/hooks/useAddItemToPlaylist";
 import {
   getAlbumName,
   getArtistNames,
@@ -29,14 +30,15 @@ const SearchResultRow = memo<SearchResultRowProps>(
       [track],
     );
 
+    const { mutate: addItemToPlaylist, isPending } = useAddItemToPlaylist();
+
     const handleAddClick = useCallback(
       (e: React.MouseEvent) => {
         e.stopPropagation();
-        // TODO: 실제 플레이리스트에 트랙 추가 로직 구현
-        console.log("트랙 추가:", track.name, "by", trackInfo.artistNames);
-        alert(`"${track.name}" 트랙이 플레이리스트에 추가되었습니다!`);
+        console.log(track.uri);
+        addItemToPlaylist([track.uri]);
       },
-      [track, trackInfo.artistNames],
+      [track, addItemToPlaylist],
     );
 
     return (
@@ -89,9 +91,10 @@ const SearchResultRow = memo<SearchResultRowProps>(
               size="sm"
               className="flex items-center gap-1 whitespace-nowrap shadow-md"
               onClick={handleAddClick}
+              disabled={isPending}
             >
               <Plus size={16} />
-              추가
+              {isPending ? "추가 중..." : "추가"}
             </Button>
           </div>
         </TableCell>

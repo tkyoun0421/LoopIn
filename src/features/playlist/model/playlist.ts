@@ -95,7 +95,7 @@ export interface Track {
 }
 
 export interface TrackObject
-  extends Omit<Track, "linked_from" | "uri" | "restrictions" | "preview_url"> {
+  extends Omit<Track, "linked_from" | "restrictions" | "preview_url"> {
   linked_from: {};
   restrictions: Restrictions;
   preview_url?: string | null;
