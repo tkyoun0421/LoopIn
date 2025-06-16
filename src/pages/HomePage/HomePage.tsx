@@ -4,9 +4,9 @@ import NewReleases from "@features/albums/ui/NewReleases";
 
 const HomePage = (): JSX.Element => {
   return (
-    <div className="p-6">
+    <main className="p-6">
       <NewReleases />
-    </div>
+    </main>
   );
 };
 
