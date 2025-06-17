@@ -4,6 +4,7 @@ import { getNewReleases } from "@features/albums/api/getNewReleases";
 import { GetNewReleasesResponse } from "@features/albums/model/albums";
 import useClientAuthToken from "@features/auth/hooks/useClientAuthToken";
 
+import { MEDIUM_CACHE_CONFIG } from "@shared/configs/cacheConfig";
 import { NEW_RELEASES_ENDPOINT } from "@shared/configs/env";
 
 const useGetNewReleases = (): UseQueryResult<
@@ -21,6 +22,7 @@ const useGetNewReleases = (): UseQueryResult<
       return getNewReleases(NEW_RELEASES_ENDPOINT, clientAuthToken);
     },
     enabled: !!clientAuthToken,
+    ...MEDIUM_CACHE_CONFIG,
   });
 };
 

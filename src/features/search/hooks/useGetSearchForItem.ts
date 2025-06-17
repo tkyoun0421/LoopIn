@@ -7,6 +7,8 @@ import {
   SearchForItemResponse,
 } from "@features/search/models/search";
 
+import { LONG_CACHE_CONFIG } from "@shared/configs/cacheConfig";
+
 const useGetSearchForItem = (
   params: GetSearchForItemParams,
 ): UseQueryResult<SearchForItemResponse, Error> => {
@@ -22,6 +24,7 @@ const useGetSearchForItem = (
       return getSearchForItem(clientToken, params);
     },
     enabled: !!clientToken && hasValidQuery,
+    ...LONG_CACHE_CONFIG,
   });
 };
 

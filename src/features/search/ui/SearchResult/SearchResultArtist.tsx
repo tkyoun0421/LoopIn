@@ -6,6 +6,11 @@ import { SearchForItemResponse } from "@features/search/models/search";
 import { Artist } from "@shared/model/sharedType";
 import Card from "@shared/ui/Card/Card";
 
+type SearchResultArtistProps = {
+  artists: SearchForItemResponse["artists"];
+  isLoading?: boolean;
+};
+
 const SearchResultArtist = ({
   artists,
   isLoading = false,
@@ -13,7 +18,6 @@ const SearchResultArtist = ({
   if (isLoading) {
     return (
       <section>
-        <h3 className="mb-4 text-xl font-semibold">아티스트</h3>
         <div className="flex h-96 items-center justify-center">
           <div className="text-[hsl(var(--muted-foreground))]">검색 중...</div>
         </div>
@@ -24,7 +28,6 @@ const SearchResultArtist = ({
   if (!artists || artists.items.length === 0) {
     return (
       <section>
-        <h3 className="mb-4 text-xl font-semibold">아티스트</h3>
         <div className="flex h-48 items-center justify-center">
           <div className="text-[hsl(var(--muted-foreground))]">
             검색 결과가 없습니다.
@@ -36,7 +39,6 @@ const SearchResultArtist = ({
 
   return (
     <section>
-      <h3 className="mb-4 text-xl font-semibold">아티스트</h3>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {artists.items.map((artist: Artist) => {
           const imageUrl = artist.images?.[0]?.url || undefined;
@@ -65,8 +67,3 @@ const SearchResultArtist = ({
 };
 
 export default SearchResultArtist;
-
-type SearchResultArtistProps = {
-  artists: SearchForItemResponse["artists"];
-  isLoading?: boolean;
-};

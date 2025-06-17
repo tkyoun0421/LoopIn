@@ -6,10 +6,10 @@ import { formatRelativeDate } from "@shared/lib/utils/formatRelativeDate";
 import { Album, Artist } from "@shared/model/sharedType";
 import Card from "@shared/ui/Card/Card";
 
-interface SearchResultAlbumProps {
+type SearchResultAlbumProps = {
   albums: SearchForItemResponse["albums"];
   isLoading?: boolean;
-}
+};
 
 const SearchResultAlbum = ({
   albums,
@@ -18,7 +18,6 @@ const SearchResultAlbum = ({
   if (isLoading) {
     return (
       <section>
-        <h3 className="mb-4 text-xl font-semibold">앨범</h3>
         <div className="flex h-96 items-center justify-center">
           <div className="text-[hsl(var(--muted-foreground))]">검색 중...</div>
         </div>
@@ -29,7 +28,6 @@ const SearchResultAlbum = ({
   if (!albums || albums.items.length === 0) {
     return (
       <section>
-        <h3 className="mb-4 text-xl font-semibold">앨범</h3>
         <div className="flex h-48 items-center justify-center">
           <div className="text-[hsl(var(--muted-foreground))]">
             검색 결과가 없습니다.
@@ -41,7 +39,6 @@ const SearchResultAlbum = ({
 
   return (
     <section>
-      <h3 className="mb-4 text-xl font-semibold">앨범</h3>
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {albums.items.map((album: Album) => {
           const imageUrl = album.images?.[0]?.url;

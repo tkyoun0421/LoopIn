@@ -5,7 +5,7 @@ import { Album, Artist } from "@shared/model/sharedType";
 
 export type GetSearchForItemParams = {
   q: string;
-  type: "track,artist,album";
+  type: "track" | "artist" | "album" | "track,artist,album";
   limit?: number;
   offset?: number;
 };

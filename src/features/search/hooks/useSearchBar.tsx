@@ -22,7 +22,6 @@ const useSearchBar = (): UseSearchBar => {
   const handleKeywordChange = (value: string) => {
     isUserInputRef.current = true;
     setKeyword(value);
-    console.log("keyword: ", value);
   };
 
   useEffect(() => {

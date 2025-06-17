@@ -1,62 +1,25 @@
 import { JSX, useState } from "react";
 
-import useGetSearchForItem from "@features/search/hooks/useGetSearchForItem";
-import useSearchBar from "@features/search/hooks/useSearchBar";
-import SearchResultAlbum from "@features/search/ui/SearchResult/SearchResultAlbum";
-import SearchResultArtist from "@features/search/ui/SearchResult/SearchResultArtist";
-import SearchResultTrack from "@features/search/ui/SearchResult/SearchResultTrack";
 import SearchTab from "@features/search/ui/SearchResult/SearchTab";
+import AlbumTabContent from "@features/search/ui/SearchResult/TabContent/AlbumTabContent";
+import AllTabContent from "@features/search/ui/SearchResult/TabContent/AllTabContent";
+import ArtistTabContent from "@features/search/ui/SearchResult/TabContent/ArtistTabContent";
+import TrackTabContent from "@features/search/ui/SearchResult/TabContent/TrackTabContent";
 
 const SearchResult = (): JSX.Element => {
   const [selectedTab, setSelectedTab] = useState<string>("all");
-  const { keyword } = useSearchBar();
-  const { data: searchResults, isLoading } = useGetSearchForItem({
-    q: keyword,
-    type: "track,artist,album",
-    limit: 5,
-  });
 
   const renderContent = () => {
     switch (selectedTab) {
       case "track":
-        return (
-          <SearchResultTrack
-            tracks={searchResults?.tracks}
-            isLoading={isLoading}
-          />
-        );
+        return <TrackTabContent />;
       case "artist":
-        return (
-          <SearchResultArtist
-            artists={searchResults?.artists}
-            isLoading={isLoading}
-          />
-        );
+        return <ArtistTabContent />;
       case "album":
-        return (
-          <SearchResultAlbum
-            albums={searchResults?.albums}
-            isLoading={isLoading}
-          />
-        );
+        return <AlbumTabContent />;
       case "all":
       default:
-        return (
-          <div className="space-y-8">
-            <SearchResultTrack
-              tracks={searchResults?.tracks}
-              isLoading={isLoading}
-            />
-            <SearchResultArtist
-              artists={searchResults?.artists}
-              isLoading={isLoading}
-            />
-            <SearchResultAlbum
-              albums={searchResults?.albums}
-              isLoading={isLoading}
-            />
-          </div>
-        );
+        return <AllTabContent onTabChange={setSelectedTab} />;
     }
   };
 

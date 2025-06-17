@@ -7,6 +7,8 @@ import {
   GetSeveralBrowseCategoriesResponse,
 } from "@features/categories/models/categories";
 
+import { LONG_CACHE_CONFIG } from "@shared/configs/cacheConfig";
+
 const useGetSeveralBrowseCategories = (
   params: GetSeveralBrowseCategoriesParams = {
     limit: 30,
@@ -24,6 +26,7 @@ const useGetSeveralBrowseCategories = (
       return getSeveralBrowseCategories(clientAuthToken, params);
     },
     enabled: !!clientAuthToken,
+    ...LONG_CACHE_CONFIG,
   });
 };
 

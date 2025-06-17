@@ -40,7 +40,6 @@ const SearchResultTrack = ({
   if (isLoading) {
     return (
       <section>
-        <h3 className="mb-4 text-xl font-semibold">곡</h3>
         <div className="flex h-96 items-center justify-center">
           <div className="text-[hsl(var(--muted-foreground))]">검색 중...</div>
         </div>
@@ -48,10 +47,21 @@ const SearchResultTrack = ({
     );
   }
 
+  if (!tracks || tracks.items.length === 0) {
+    return (
+      <section>
+        <div className="flex h-48 items-center justify-center">
+          <div className="text-[hsl(var(--muted-foreground))]">
+            검색 결과가 없습니다.
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section>
-      <h3 className="mb-4 text-xl font-semibold">곡</h3>
-      <div className="flex max-h-96 flex-col rounded-lg">
+      <div className="flex flex-col rounded-lg">
         <Table>
           <TableHeader className="bg-background">
             <TableRow className="hover:bg-transparent">
@@ -67,10 +77,10 @@ const SearchResultTrack = ({
           </TableHeader>
         </Table>
 
-        <div className="scrollbar-hide flex-1 overflow-y-auto">
+        <div className="flex-1">
           <Table>
             <TableBody>
-              {tracks?.items.map((track, index) => {
+              {tracks.items.map((track, index) => {
                 const trackImage = getSearchTrackImage(track);
                 const artistNames = getSearchTrackArtists(track);
                 const albumName = getSearchTrackAlbum(track);
