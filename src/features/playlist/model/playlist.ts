@@ -72,6 +72,7 @@ export type PlaylistTrack = {
 };
 
 export interface Track {
+  href: string;
   album: Album;
   artists: Artist[];
   available_markets: string[];
@@ -80,7 +81,6 @@ export interface Track {
   explicit: boolean;
   external_ids: ExternalIds;
   external_urls: ExternalUrls;
-  href: string;
   id: string;
   is_playable: boolean;
   linked_from?: object;

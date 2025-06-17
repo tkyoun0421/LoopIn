@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
-import { useTokenStore } from "@features/auth/store/useTokenStore";
+import useGetClientAuthToken from "@features/auth/hooks/useClientAuthToken";
 import getSeveralBrowseCategories from "@features/categories/api/getSeveralBrowseCategories";
 import {
   GetSeveralBrowseCategoriesParams,
@@ -13,15 +13,17 @@ const useGetSeveralBrowseCategories = (
     offset: 0,
   },
 ): UseQueryResult<GetSeveralBrowseCategoriesResponse, Error> => {
-  const { access_token } = useTokenStore();
-
-  if (!access_token) {
-    throw new Error("Access token is required");
-  }
+  const clientAuthToken = useGetClientAuthToken();
 
   return useQuery({
     queryKey: ["browse-categories", params],
-    queryFn: () => getSeveralBrowseCategories(access_token, params),
+    queryFn: () => {
+      if (!clientAuthToken) {
+        throw new Error("fail to fetch client auth token.");
+      }
+      return getSeveralBrowseCategories(clientAuthToken, params);
+    },
+    enabled: !!clientAuthToken,
   });
 };
 

@@ -1,13 +1,10 @@
-import { JSX, useState } from "react";
+import { JSX } from "react";
 
 import SearchInput from "@features/playlist/ui/PlaylistDetail/PlaylistSearch/SearchInput";
+import useSearchBar from "@features/search/hooks/useSearchBar";
 
 const SearchBar = (): JSX.Element => {
-  const [keyword, setKeyword] = useState("");
-
-  const handleKeywordChange = (value: string) => {
-    setKeyword(value);
-  };
+  const { keyword, handleKeywordChange } = useSearchBar();
 
   return (
     <section className="flex flex-col gap-4">
