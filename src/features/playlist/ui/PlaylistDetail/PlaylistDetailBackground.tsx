@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import { JSX } from "react";
 
 import { Playlist } from "@features/playlist/model/playlist";
 

@@ -10,13 +10,20 @@ const PlaylistDetailPage = lazy(
   () => import("@pages/PlaylistDetailPage/PlaylistDetailPage"),
 );
 const ErrorPage = lazy(() => import("@pages/ErrorPage/ErrorPage"));
+const SearchLayout = lazy(() => import("@pages/Layout/SearchLayout"));
+const SearchDetailPage = lazy(
+  () => import("@pages/SearchDetailPage/SearchDetailPage"),
+);
 
 const App = (): JSX.Element => {
   return (
     <Routes>
       <Route path="/" element={<AppLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="search" element={<SearchPage />} />
+        <Route path="search" element={<SearchLayout />}>
+          <Route index element={<SearchPage />} />
+          <Route path=":keyword" element={<SearchDetailPage />} />
+        </Route>
         <Route path="playlist/:id" element={<PlaylistDetailPage />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />

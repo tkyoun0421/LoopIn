@@ -10,9 +10,12 @@ export interface Image {
 
 export interface Artist {
   external_urls: ExternalUrls;
+  followers: Followers;
+  genres: string[];
   href: string;
   id: string;
-  name: string;
+  images: Image[];
+  popularity: number;
   type: string;
   uri: string;
 }

@@ -1,12 +1,13 @@
 import axios from "axios";
 
+import { ClientAuthTokenResponse } from "@features/auth/model/auth";
 import {
   GetSeveralBrowseCategoriesParams,
   GetSeveralBrowseCategoriesResponse,
 } from "@features/categories/models/categories";
 
 const getSeveralBrowseCategories = async (
-  accessToken: string,
+  clientAuthToken: ClientAuthTokenResponse["access_token"],
   params?: GetSeveralBrowseCategoriesParams,
 ): Promise<GetSeveralBrowseCategoriesResponse> => {
   const url = `https://api.spotify.com/v1/browse/categories`;
@@ -14,7 +15,7 @@ const getSeveralBrowseCategories = async (
   try {
     const response = await axios.get<GetSeveralBrowseCategoriesResponse>(url, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${clientAuthToken}`,
       },
       params,
     });

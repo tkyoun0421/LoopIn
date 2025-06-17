@@ -1,21 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 import getClientAuthToken from "@features/auth/api/getClientAuthToken";
-import { ClientAuthTokenResponse } from "@features/auth/model/auth";
+import useClientAuthStore from "@features/auth/store/useClientAuthStore";
 
 import { CLIENT_AUTH_TOKEN_ENDPOINT } from "@shared/configs/env";
 
-const useGetClientAuthToken = ():
-  | ClientAuthTokenResponse["access_token"]
-  | undefined => {
-  const { data } = useQuery({
-    queryKey: ["client-credential=token"],
+const useGetClientAuthToken = (): string | null => {
+  const { token, setToken } = useClientAuthStore();
+
+  const { data, isSuccess } = useQuery({
+    queryKey: ["client-credential-token"],
     queryFn: () => getClientAuthToken(CLIENT_AUTH_TOKEN_ENDPOINT),
+    enabled: !token,
   });
 
-  const clientAuthToke = data?.access_token;
+  useEffect(() => {
+    if (isSuccess && data?.access_token) {
+      setToken(data.access_token);
+    }
+  }, [isSuccess, data?.access_token, setToken]);
 
-  return clientAuthToke;
+  return token;
 };
 
 export default useGetClientAuthToken;
