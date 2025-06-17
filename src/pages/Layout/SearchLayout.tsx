@@ -1,16 +1,18 @@
-import { JSX } from "react";
+import { JSX, Suspense } from "react";
 import { Outlet } from "react-router";
+
+import LoadingPage from "@pages/LoadingPage/LoadingPage";
 
 import SearchBar from "@features/search/ui/SearchBar";
 
 const SearchLayout = (): JSX.Element => {
   return (
-    <>
-      <main className="bg-[hsl(var(--secondary))] p-6">
+    <Suspense fallback={<LoadingPage />}>
+      <section className="min-h-screen bg-[hsl(var(--secondary))] p-6">
         <SearchBar />
         <Outlet />
-      </main>
-    </>
+      </section>
+    </Suspense>
   );
 };
 
