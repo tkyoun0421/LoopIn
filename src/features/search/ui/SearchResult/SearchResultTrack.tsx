@@ -91,9 +91,6 @@ const SearchResultTrack = ({
         tracks={trackItems}
         isLoading={isLoading}
         renderAddButton={renderAddButton}
-        onTrackClick={(track, index) => {
-          console.log("Track clicked:", track, index);
-        }}
       />
 
       <PlaylistSelectModal

@@ -20,13 +20,6 @@ import {
   TableRow,
 } from "@shared/ui/Table/Table";
 
-interface PlaylistTracksTableProps {
-  tracks: PlaylistItem[];
-  fetchNextPage: () => Promise<void>;
-  hasNextPage: boolean;
-  isFetchingNextPage: boolean;
-}
-
 const PlaylistTracksTable = ({
   tracks,
   fetchNextPage,
@@ -146,3 +139,10 @@ const PlaylistTracksTable = ({
 };
 
 export default PlaylistTracksTable;
+
+type PlaylistTracksTableProps = {
+  tracks: PlaylistItem[];
+  fetchNextPage: () => Promise<unknown>;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+};
