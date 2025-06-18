@@ -2,11 +2,10 @@ import {
   Audiobook,
   Playlist,
   SimplifiedEpisode,
-  TrackObject,
 } from "@features/playlist/model/playlist";
 
 import { ApiResponse } from "@shared/model/apiResponse";
-import { Album, Artist, Show } from "@shared/model/sharedType";
+import { Album, Artist, Show, Track } from "@shared/model/sharedType";
 
 export enum SEARCH_TYPE {
   TRACK = "track",
@@ -31,7 +30,7 @@ export type SearchResponse = {
   artists?: ApiResponse<Artist>;
   albums?: ApiResponse<Album>;
   playlists?: ApiResponse<Playlist>;
-  tracks?: ApiResponse<TrackObject>;
+  tracks?: ApiResponse<Track>;
   shows?: ApiResponse<Show>;
   episodes?: ApiResponse<SimplifiedEpisode>;
   audiobooks?: ApiResponse<Audiobook>;

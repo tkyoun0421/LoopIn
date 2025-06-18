@@ -1,6 +1,7 @@
-import { Playlist, Track } from "@features/playlist/model/playlist";
+import { Playlist } from "@features/playlist/model/playlist";
 
 import { apiInstance } from "@shared/configs/api";
+import { Track } from "@shared/model/sharedType";
 
 export const addItemToPlaylist = async (
   playlistId: string,

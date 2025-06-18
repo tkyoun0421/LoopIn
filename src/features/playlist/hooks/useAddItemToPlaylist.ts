@@ -2,9 +2,10 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { useParams } from "react-router";
 
 import { addItemToPlaylist } from "@features/playlist/api/addItemToPlaylist";
-import { Playlist, Track } from "@features/playlist/model/playlist";
+import { Playlist } from "@features/playlist/model/playlist";
 
 import { queryClient } from "@shared/lib/react-query/queryClient";
+import { Track } from "@shared/model/sharedType";
 
 const useAddItemToPlaylist = (): UseMutationResult<
   Playlist,

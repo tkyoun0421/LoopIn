@@ -1,7 +1,5 @@
-import { Track } from "@features/playlist/model/playlist";
-
 import { ApiResponse } from "@shared/model/apiResponse";
-import { Album, Artist } from "@shared/model/sharedType";
+import { Album, Artist, Track } from "@shared/model/sharedType";
 
 export type GetSearchForItemParams = {
   q: string;
