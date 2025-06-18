@@ -8,7 +8,7 @@ interface Props {
 
 const CategoriesSkeleton = ({ length }: Props): JSX.Element => {
   return (
-    <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
       {Array.from({ length }).map((_, index) => (
         <div
           key={index}
