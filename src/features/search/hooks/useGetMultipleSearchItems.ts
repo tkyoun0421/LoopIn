@@ -75,6 +75,48 @@ const useGetMultipleSearchItems = (
     })),
   });
 
+  const isAllCompleted = queries.every(
+    query => !query.isLoading && (query.data || query.error),
+  );
+  const isAllLoading =
+    queries.some(query => query.isLoading) || !isAllCompleted;
+  const hasErrors = queries.some(query => !!query.error);
+
+  if (!isAllCompleted) {
+    const emptyResults: SearchResults = {
+      artists: searchItems.artists.map(searchQuery => ({
+        searchQuery,
+        item: null,
+        isLoading: true,
+        error: null,
+      })),
+      tracks: searchItems.tracks.map(searchQuery => ({
+        searchQuery,
+        item: null,
+        isLoading: true,
+        error: null,
+      })),
+      albums: searchItems.albums.map(searchQuery => ({
+        searchQuery,
+        item: null,
+        isLoading: true,
+        error: null,
+      })),
+      rookies: searchItems.rookies.map(searchQuery => ({
+        searchQuery,
+        item: null,
+        isLoading: true,
+        error: null,
+      })),
+    };
+
+    return {
+      results: emptyResults,
+      isAllLoading,
+      hasErrors,
+    };
+  }
+
   let currentIndex = 0;
 
   const artistResults: SearchItemResult<Artist>[] = searchItems.artists.map(
@@ -83,7 +125,7 @@ const useGetMultipleSearchItems = (
       return {
         searchQuery,
         item: query.data?.artists?.items?.[0] || null,
-        isLoading: query.isLoading,
+        isLoading: false,
         error: query.error,
       };
     },
@@ -95,7 +137,7 @@ const useGetMultipleSearchItems = (
       return {
         searchQuery,
         item: query.data?.tracks?.items?.[0] || null,
-        isLoading: query.isLoading,
+        isLoading: false,
         error: query.error,
       };
     },
@@ -107,7 +149,7 @@ const useGetMultipleSearchItems = (
       return {
         searchQuery,
         item: query.data?.albums?.items?.[0] || null,
-        isLoading: query.isLoading,
+        isLoading: false,
         error: query.error,
       };
     },
@@ -119,7 +161,7 @@ const useGetMultipleSearchItems = (
       return {
         searchQuery,
         item: query.data?.artists?.items?.[0] || null,
-        isLoading: query.isLoading,
+        isLoading: false,
         error: query.error,
       };
     },
@@ -131,9 +173,6 @@ const useGetMultipleSearchItems = (
     albums: albumResults,
     rookies: rookieResults,
   };
-
-  const isAllLoading = queries.some(query => query.isLoading);
-  const hasErrors = queries.some(query => !!query.error);
 
   return {
     results,
