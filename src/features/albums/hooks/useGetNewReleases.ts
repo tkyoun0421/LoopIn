@@ -1,6 +1,7 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 import { getNewReleases } from "@features/albums/api/getNewReleases";
+import { generateQueryKey } from "@features/albums/libs/queryKeyFactories";
 import { GetNewReleasesResponse } from "@features/albums/model/albums";
 import useClientAuthToken from "@features/auth/hooks/useClientAuthToken";
 
@@ -13,15 +14,11 @@ const useGetNewReleases = (): UseQueryResult<
   const clientAuthToken = useClientAuthToken();
 
   return useQuery({
-    queryKey: ["new-releases"],
-    queryFn: async () => {
-      if (!clientAuthToken) {
-        throw new Error("fail to fetch client auth token.");
-      }
-
-      return getNewReleases(NEW_RELEASES_ENDPOINT, clientAuthToken);
-    },
     enabled: !!clientAuthToken,
+    queryKey: generateQueryKey(clientAuthToken!),
+    queryFn: async () => {
+      return getNewReleases(NEW_RELEASES_ENDPOINT);
+    },
     ...MEDIUM_CACHE_CONFIG,
   });
 };

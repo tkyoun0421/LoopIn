@@ -1,21 +1,21 @@
 import { create } from "zustand";
 
-interface ClientAuthState {
-  token: string | null;
-  setToken: (token: string) => void;
-  clearToken: () => void;
-}
-
 const useClientAuthStore = create<ClientAuthState>(set => ({
-  token: null,
+  clientAuthToken: null,
 
-  setToken: (token: string) => {
-    set({ token });
+  setClientAuthToken: (token: string) => {
+    set({ clientAuthToken: token });
   },
 
-  clearToken: () => {
-    set({ token: null });
+  clearClientAuthToken: () => {
+    set({ clientAuthToken: null });
   },
 }));
 
 export default useClientAuthStore;
+
+type ClientAuthState = {
+  clientAuthToken: string | null;
+  setClientAuthToken: (token: string) => void;
+  clearClientAuthToken: () => void;
+};

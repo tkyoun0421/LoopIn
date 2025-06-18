@@ -1,6 +1,6 @@
 import { useQueries } from "@tanstack/react-query";
 
-import useGetClientAuthToken from "@features/auth/hooks/useClientAuthToken";
+import useClientAuthStore from "@features/auth/store/useClientAuthStore";
 import getSearchForItem from "@features/search/api/getSearchForItem";
 import { SearchForItemResponse } from "@features/search/models/search";
 
@@ -33,7 +33,7 @@ const useGetMultipleSearchItems = (
   isAllLoading: boolean;
   hasErrors: boolean;
 } => {
-  const clientToken = useGetClientAuthToken();
+  const { clientAuthToken } = useClientAuthStore();
 
   const searchItems = {
     artists: customSearchItems?.artists || YEAR_END_SEARCH_ITEMS.artists,
@@ -61,16 +61,16 @@ const useGetMultipleSearchItems = (
     queries: allQueries.map(({ query, type, isRookie = false }) => ({
       queryKey: ["searchItem", type, query, isRookie],
       queryFn: (): Promise<SearchForItemResponse> => {
-        if (!clientToken) {
+        if (!clientAuthToken) {
           throw new Error("토큰을 사용할 수 없습니다.");
         }
-        return getSearchForItem(clientToken, {
+        return getSearchForItem(clientAuthToken, {
           q: query,
           type,
           limit: 1,
         });
       },
-      enabled: !!clientToken && !!query.trim(),
+      enabled: !!clientAuthToken && !!query.trim(),
       ...LONG_CACHE_CONFIG,
     })),
   });

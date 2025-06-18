@@ -4,7 +4,7 @@ import {
   UseInfiniteQueryResult,
 } from "@tanstack/react-query";
 
-import useGetClientAuthToken from "@features/auth/hooks/useClientAuthToken";
+import useClientAuthStore from "@features/auth/store/useClientAuthStore";
 import { searchItemsByKeyword } from "@features/playlist/api/searchItemsByKeyword";
 import {
   SearchRequestParams,
@@ -14,15 +14,18 @@ import {
 const useSearchItemsByKeyword = (
   params: SearchRequestParams,
 ): UseInfiniteQueryResult<InfiniteData<SearchResponse>> => {
-  const token = useGetClientAuthToken();
+  const { clientAuthToken } = useClientAuthStore();
 
   return useInfiniteQuery({
     queryKey: ["search", params],
     queryFn: ({ pageParam = 0 }) => {
-      if (!token) {
-        throw new Error("token is not found");
+      if (!clientAuthToken) {
+        throw new Error("clientAuthToken is not found");
       }
-      return searchItemsByKeyword(token, { ...params, offset: pageParam });
+      return searchItemsByKeyword(clientAuthToken, {
+        ...params,
+        offset: pageParam,
+      });
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => {
