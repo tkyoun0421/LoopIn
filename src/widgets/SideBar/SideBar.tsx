@@ -5,7 +5,7 @@ import Navigation from "@widgets/Navigation/Navigation";
 
 const SideBar = (): JSX.Element => {
   return (
-    <aside className="hidden h-screen w-80 flex-col gap-4 border-r border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.3)] p-4 lg:flex dark:bg-[hsl(var(--card))]">
+    <aside className="sticky top-20 hidden h-[calc(100vh-5rem)] w-80 flex-col gap-4 border-r border-[hsl(var(--border))] bg-[hsl(var(--muted)/0.3)] p-4 lg:flex dark:bg-[hsl(var(--card))]">
       <Navigation />
       <MyLibrary />
     </aside>

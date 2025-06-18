@@ -1,11 +1,13 @@
 import { JSX } from "react";
 
 import NewReleases from "@features/albums/ui/NewReleases";
+import YearEndSummary from "@features/search/ui/YearEnd/YearEndSummary";
 
 const HomePage = (): JSX.Element => {
   return (
     <main className="p-6">
       <NewReleases />
+      <YearEndSummary />
     </main>
   );
 };
