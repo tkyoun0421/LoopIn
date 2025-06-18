@@ -1,13 +1,20 @@
+import { josa } from "es-hangul";
 import { Plus } from "lucide-react";
 import { JSX, useCallback, useState } from "react";
 
 import useAddItemToSpecificPlaylist from "@features/playlist/hooks/useAddItemToSpecificPlaylist";
 import { SearchForItemResponse } from "@features/search/models/search";
 
+import useToast from "@shared/hooks/useToast";
 import { Track } from "@shared/model/sharedType";
 import Button from "@shared/ui/Button/Button";
 import PlaylistSelectModal from "@shared/ui/PlaylistSelectModal/PlaylistSelectModal";
 import TrackTable from "@shared/ui/TrackTable/TrackTable";
+
+type SearchResultTrackProps = {
+  tracks: SearchForItemResponse["tracks"];
+  isLoading?: boolean;
+};
 
 const SearchResultTrack = ({
   tracks,
@@ -16,6 +23,8 @@ const SearchResultTrack = ({
   const trackItems = tracks?.items || [];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
+
+  const { success, error } = useToast();
 
   const { mutate: addItemToSpecificPlaylist, isPending } =
     useAddItemToSpecificPlaylist();
@@ -46,10 +55,26 @@ const SearchResultTrack = ({
 
   const handlePlaylistSelect = (playlistId: string) => {
     if (selectedTrack) {
-      addItemToSpecificPlaylist({
-        playlistId,
-        trackUris: [selectedTrack.uri],
-      });
+      addItemToSpecificPlaylist(
+        {
+          playlistId,
+          trackUris: [selectedTrack.uri],
+        },
+        {
+          onSuccess: () => {
+            success({
+              title: "플레이리스트에 추가됨",
+              message: `"${josa(selectedTrack.name, "이/가")}" 플레이리스트에 추가되었습니다.`,
+            });
+          },
+          onError: _err => {
+            error({
+              title: "추가 실패",
+              message: "플레이리스트에 곡을 추가하는 중 오류가 발생했습니다.",
+            });
+          },
+        },
+      );
     }
     setIsModalOpen(false);
     setSelectedTrack(null);
@@ -82,8 +107,3 @@ const SearchResultTrack = ({
 };
 
 export default SearchResultTrack;
-
-type SearchResultTrackProps = {
-  tracks: SearchForItemResponse["tracks"];
-  isLoading?: boolean;
-};

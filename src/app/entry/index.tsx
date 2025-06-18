@@ -7,6 +7,7 @@ import reportWebVitals from "@app/configs/reportWebVitals";
 import App from "@app/routes/App";
 
 import { queryClient } from "@shared/lib/react-query/queryClient";
+import ToastContainer from "@shared/ui/Toast/ToastContainer";
 
 import "@app/styles/globals.css";
 
@@ -16,6 +17,7 @@ root.render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <App />
+        <ToastContainer />
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,
