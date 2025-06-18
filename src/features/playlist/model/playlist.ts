@@ -1,16 +1,12 @@
 import { ApiResponse } from "@shared/model/apiResponse";
 import {
-  Album,
-  Artist,
   Copyrights,
-  ExternalIds,
+  EpisodeObject,
   ExternalUrls,
   Followers,
   Image,
   Owner,
-  Restrictions,
-  ResumePoint,
-  Show,
+  Track,
   Tracks,
 } from "@shared/model/sharedType";
 
@@ -55,7 +51,7 @@ export type PlaylistItem = {
     uri: string;
   };
   is_local: boolean;
-  track: TrackObject | EpisodeObject;
+  track: Track | EpisodeObject;
   video_thumbnail: {
     url: string | null;
   };
@@ -70,63 +66,6 @@ export type PlaylistTrack = {
   total?: number;
   items: PlaylistItem[];
 };
-
-export interface Track {
-  href: string;
-  album: Album;
-  artists: Artist[];
-  available_markets: string[];
-  disc_number: number;
-  duration_ms: number;
-  explicit: boolean;
-  external_ids: ExternalIds;
-  external_urls: ExternalUrls;
-  id: string;
-  is_playable: boolean;
-  linked_from?: object;
-  restrictions?: Restrictions;
-  name: string;
-  popularity: number;
-  preview_url: string | null;
-  track_number: number;
-  type: string;
-  uri: string;
-  is_local: boolean;
-}
-
-export interface TrackObject
-  extends Omit<Track, "linked_from" | "restrictions" | "preview_url"> {
-  linked_from: {};
-  restrictions: Restrictions;
-  preview_url?: string | null;
-  url: string;
-}
-
-export interface EpisodeObject
-  extends Pick<
-    Track,
-    | "external_urls"
-    | "href"
-    | "id"
-    | "name"
-    | "type"
-    | "explicit"
-    | "is_playable"
-    | "duration_ms"
-  > {
-  audio_preview_url?: string | null;
-  description: string;
-  html_description: string;
-  images: Image[];
-  is_externally_hosted: boolean;
-  language: string;
-  languages: string[];
-  release_date: string;
-  release_date_precision: string;
-  resume_point: ResumePoint;
-  restrictions: Restrictions;
-  show: Show;
-}
 
 export type GetPlaylistItemsResponse = ApiResponse<PlaylistItem>;
 

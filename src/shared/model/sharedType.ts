@@ -18,6 +18,7 @@ export interface Artist {
   popularity: number;
   type: string;
   uri: string;
+  name: string;
 }
 
 export interface Owner {
@@ -66,10 +67,6 @@ export interface ExternalIds {
   upc: string;
 }
 
-export interface Restrictions {
-  reason: string;
-}
-
 export interface ResumePoint {
   fully_played: boolean;
   resume_position_ms: number;
@@ -105,12 +102,59 @@ export interface ExternalIds {
   ean: string;
   upc: string;
 }
+export interface TrackObject
+  extends Omit<Track, "linked_from" | "restrictions" | "preview_url"> {
+  linked_from: {};
+  restrictions: Restrictions;
+  preview_url?: string | null;
+  url: string;
+}
 
-export interface Artist {
-  external_urls: ExternalUrls;
+export interface Track {
   href: string;
+  album: Album;
+  artists: Artist[];
+  available_markets: string[];
+  disc_number: number;
+  duration_ms: number;
+  explicit: boolean;
+  external_ids: ExternalIds;
+  external_urls: ExternalUrls;
   id: string;
+  is_playable: boolean;
+  linked_from?: object;
+  restrictions?: Restrictions;
   name: string;
+  popularity: number;
+  preview_url: string | null;
+  track_number: number;
   type: string;
   uri: string;
+  is_local: boolean;
+}
+
+export interface EpisodeObject
+  extends Pick<
+    Track,
+    | "external_urls"
+    | "href"
+    | "id"
+    | "name"
+    | "type"
+    | "explicit"
+    | "is_playable"
+    | "duration_ms"
+  > {
+  audio_preview_url?: string | null;
+  description: string;
+  html_description: string;
+  images: Image[];
+  is_externally_hosted: boolean;
+  language: string;
+  languages: string[];
+  release_date: string;
+  release_date_precision: string;
+  resume_point: ResumePoint;
+  restrictions: Restrictions;
+  show: Show;
 }
