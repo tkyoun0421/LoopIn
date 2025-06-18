@@ -1,21 +1,19 @@
-import { EpisodeObject, TrackObject } from "@features/playlist/model/playlist";
+import { EpisodeObject, Track } from "@shared/model/sharedType";
 
 export const isEpisode = (
-  track: TrackObject | EpisodeObject,
+  track: Track | EpisodeObject,
 ): track is EpisodeObject => {
   return "description" in track;
 };
 
-export const getTrackImage = (
-  track: TrackObject | EpisodeObject,
-): string | null => {
+export const getTrackImage = (track: Track | EpisodeObject): string | null => {
   if (isEpisode(track)) {
     return track.images?.[0]?.url || null;
   }
   return track.album?.images?.[0]?.url || null;
 };
 
-export const getArtistNames = (track: TrackObject | EpisodeObject): string => {
+export const getArtistNames = (track: Track | EpisodeObject): string => {
   if (isEpisode(track)) {
     return track.show?.name || "Unknown Name";
   }
@@ -24,7 +22,7 @@ export const getArtistNames = (track: TrackObject | EpisodeObject): string => {
   );
 };
 
-export const getAlbumName = (track: TrackObject | EpisodeObject): string => {
+export const getAlbumName = (track: Track | EpisodeObject): string => {
   if (isEpisode(track)) {
     return track.show?.name || "N/A";
   }

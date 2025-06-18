@@ -23,7 +23,7 @@ const Navigation = (): JSX.Element => {
             to="/search"
             icon={<Search />}
             label="Search"
-            active={pathname === "/search"}
+            active={pathname.startsWith("/search")}
           />
         </li>
       </ul>

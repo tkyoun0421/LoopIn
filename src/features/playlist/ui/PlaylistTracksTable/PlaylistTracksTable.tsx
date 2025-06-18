@@ -1,16 +1,16 @@
 import { Clock, Play } from "lucide-react";
 import { JSX } from "react";
 
-import {
-  getAlbumName,
-  getArtistNames,
-  getTrackImage,
-} from "@features/playlist/lib/trackUtils";
 import { PlaylistItem } from "@features/playlist/model/playlist";
 
 import useIntersectionObserver from "@shared/hooks/useIntersectionObserver";
 import { formatToYYYYMMDD } from "@shared/lib/utils/formatDate";
 import { formatDuration } from "@shared/lib/utils/formatDuration";
+import {
+  getAlbumName,
+  getArtistNames,
+  getTrackImage,
+} from "@shared/lib/utils/track";
 import {
   Table,
   TableBody,
@@ -19,13 +19,6 @@ import {
   TableHeader,
   TableRow,
 } from "@shared/ui/Table/Table";
-
-interface PlaylistTracksTableProps {
-  tracks: PlaylistItem[];
-  fetchNextPage: () => Promise<any>;
-  hasNextPage: boolean;
-  isFetchingNextPage: boolean;
-}
 
 const PlaylistTracksTable = ({
   tracks,
@@ -146,3 +139,10 @@ const PlaylistTracksTable = ({
 };
 
 export default PlaylistTracksTable;
+
+type PlaylistTracksTableProps = {
+  tracks: PlaylistItem[];
+  fetchNextPage: () => Promise<unknown>;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+};

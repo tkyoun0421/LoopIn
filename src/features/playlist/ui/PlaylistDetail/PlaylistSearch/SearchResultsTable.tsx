@@ -1,20 +1,14 @@
-import { Clock } from "lucide-react";
-import { memo, useMemo } from "react";
+import { Plus } from "lucide-react";
+import { memo, useCallback } from "react";
 
-import type { TrackObject } from "@features/playlist/model/playlist";
-import SearchResultRow from "@features/playlist/ui/PlaylistDetail/PlaylistSearch/SearchResultRow";
+import useAddItemToPlaylist from "@features/playlist/hooks/useAddItemToPlaylist";
 
-import useIntersectionObserver from "@shared/hooks/useIntersectionObserver";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@shared/ui/Table/Table";
+import { Track } from "@shared/model/sharedType";
+import Button from "@shared/ui/Button/Button";
+import TrackTableWithInfiniteScroll from "@shared/ui/TrackTable/TrackTableWithInfiniteScroll";
 
 type SearchResultsTableProps = {
-  tracks: TrackObject[];
+  tracks: Track[];
   onLoadMore: () => void;
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
@@ -22,78 +16,40 @@ type SearchResultsTableProps = {
 
 const SearchResultsTable = memo<SearchResultsTableProps>(
   ({ tracks, onLoadMore, hasNextPage = false, isFetchingNextPage = false }) => {
-    const { targetRef } = useIntersectionObserver({
-      onIntersect: () => {
-        if (hasNextPage && !isFetchingNextPage) {
-          onLoadMore();
-        }
-      },
-    });
+    const { mutate: addItemToPlaylist, isPending } = useAddItemToPlaylist();
 
-    const EmptyMessage = useMemo(
-      () => (
-        <div className="flex h-full items-center justify-center py-16">
-          <span className="text-[hsl(var(--muted-foreground))]">
-            검색 결과가 없습니다.
-          </span>
-        </div>
-      ),
-      [],
+    const renderAddButton = useCallback(
+      (track: Track, _index: number) => {
+        const handleAddClick = (e: React.MouseEvent) => {
+          e.stopPropagation();
+          addItemToPlaylist([track.uri]);
+        };
+
+        return (
+          <Button
+            variant="primary"
+            size="sm"
+            className="flex items-center gap-1 whitespace-nowrap shadow-md"
+            onClick={handleAddClick}
+            disabled={isPending}
+          >
+            <Plus size={16} />
+            {isPending ? "추가 중..." : "추가"}
+          </Button>
+        );
+      },
+      [addItemToPlaylist, isPending],
     );
 
     return (
-      <div className="flex h-[calc(100vh-300px)] flex-col rounded-lg">
-        <Table>
-          <TableHeader className="bg-background">
-            <TableRow className="hover:bg-transparent">
-              <TableHead className="w-16 px-4 !text-center">#</TableHead>
-              <TableHead className="px-4">제목</TableHead>
-              <TableHead className="hidden px-4 lg:table-cell">앨범</TableHead>
-              <TableHead className="w-20 px-4 text-center">
-                <div className="flex justify-center">
-                  <Clock size={16} />
-                </div>
-              </TableHead>
-              <TableHead className="w-0 p-0"></TableHead>
-            </TableRow>
-          </TableHeader>
-        </Table>
-
-        <div className="scrollbar-hide flex-1 overflow-y-auto">
-          {tracks.length > 0 ? (
-            <>
-              <Table>
-                <TableBody>
-                  {tracks.map((track, index) => (
-                    <SearchResultRow
-                      key={`${track.id}-${track.name}-${index}`}
-                      track={track}
-                      index={index}
-                    />
-                  ))}
-                </TableBody>
-              </Table>
-
-              {hasNextPage && (
-                <div ref={targetRef} className="py-8 text-center">
-                  {isFetchingNextPage ? (
-                    <div className="flex items-center justify-center gap-2 text-[hsl(var(--muted-foreground))]">
-                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                      더 많은 결과를 불러오는 중...
-                    </div>
-                  ) : (
-                    <div className="text-[hsl(var(--muted-foreground))]">
-                      스크롤하여 더 많은 결과 보기
-                    </div>
-                  )}
-                </div>
-              )}
-            </>
-          ) : (
-            EmptyMessage
-          )}
-        </div>
-      </div>
+      <TrackTableWithInfiniteScroll
+        tracks={tracks}
+        renderAddButton={renderAddButton}
+        onLoadMore={onLoadMore}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        emptyMessage="검색 결과가 없습니다."
+      />
     );
   },
 );

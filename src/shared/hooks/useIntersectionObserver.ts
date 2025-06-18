@@ -16,6 +16,7 @@ const useIntersectionObserver = ({
 
   useEffect(() => {
     const target = targetRef.current;
+
     if (!target) return;
 
     const observer = new IntersectionObserver(
