@@ -7,7 +7,7 @@ import CategoriesSkeleton from "@features/categories/ui/CategoriesSkeleton";
 const Categories = (): JSX.Element => {
   const { data, isLoading, error } = useGetSeveralBrowseCategories();
 
-  if (isLoading) return <CategoriesSkeleton length={12} />;
+  if (isLoading) return <CategoriesSkeleton length={6} />;
   if (error) return <div>Error: {error.message}</div>;
 
   const categoriesWithColors = data

@@ -39,6 +39,8 @@ class ClientAuthStrategy implements AuthStrategy {
           console.warn(
             "⚠️ [ClientAuthStrategy] Client token 만료 - 토큰 재발급 필요",
           );
+
+          useClientAuthStore.getState().clearClientAuthToken();
         }
         return Promise.reject(error);
       },
@@ -76,7 +78,8 @@ class UserAuthStrategy implements AuthStrategy {
               "⚠️ [UserAuthStrategy] refresh_token 없음 - 로그아웃 처리",
             );
 
-            return handleLogout();
+            handleLogout();
+            return Promise.reject(error);
           }
 
           try {

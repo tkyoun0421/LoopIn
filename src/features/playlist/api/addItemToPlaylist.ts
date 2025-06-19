@@ -6,12 +6,12 @@ import { Track } from "@shared/model/sharedType";
 export const addItemToPlaylist = async (
   playlistId: string,
   trackUris: Track["uri"][],
-  position?: number,
+  position: number = 0,
 ): Promise<Playlist> => {
   try {
-    const body: { uris: Track["uri"][]; position?: number } = {
+    const body: { uris: Track["uri"][]; position: number } = {
       uris: trackUris,
-      position: position ?? 0,
+      position,
     };
 
     const response = await APIBuilder.post(

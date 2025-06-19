@@ -4,5 +4,5 @@ export const generateQueryKey = (
   queryKey: string,
   ...args: unknown[]
 ): QueryKey => {
-  return [[...queryKey], ...args];
+  return [queryKey, ...args];
 };

@@ -17,7 +17,6 @@ const useGetClientAuthToken = ():
     queryKey: generateQueryKey(queryKey.clientAuthToken),
     queryFn: getClientAuthToken,
     enabled: !clientAuthToken,
-    staleTime: Infinity,
   });
 
   useEffect(() => {

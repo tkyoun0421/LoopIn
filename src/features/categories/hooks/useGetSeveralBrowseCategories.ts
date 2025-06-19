@@ -11,7 +11,7 @@ import { generateQueryKey } from "@shared/tanstack-query/libs/keyFactories";
 import { queryKey } from "@shared/tanstack-query/queryKey";
 
 const useGetSeveralBrowseCategories = (
-  params: GetSeveralBrowseCategoriesParams,
+  params?: GetSeveralBrowseCategoriesParams,
 ): UseQueryResult<GetSeveralBrowseCategoriesResponse, Error> => {
   return useQuery({
     queryKey: generateQueryKey(queryKey.browseCategories, params),
