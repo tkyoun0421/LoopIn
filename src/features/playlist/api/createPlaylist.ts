@@ -1,21 +1,21 @@
 import { Playlist, PlaylistFormData } from "@features/playlist/model/playlist";
 
-import { apiInstance } from "@shared/configs/api";
+import { APIBuilder } from "@shared/configs/api";
 
 export const createPlaylist = async (
   data: PlaylistFormData,
   userId: string,
 ): Promise<Playlist> => {
   try {
-    const response = await apiInstance.post(
-      `https://api.spotify.com/v1/users/${userId}/playlists`,
-      {
-        name: data.name,
-        description: data.description,
-        public: data.public,
-        collaborative: data.collaborative,
-      },
-    );
+    const response = await APIBuilder.post(`users/${userId}/playlists`, {
+      name: data.name,
+      description: data.description,
+      public: data.public,
+      collaborative: data.collaborative,
+    })
+      .authType("user")
+      .build()
+      .call<Playlist>();
 
     return response.data;
   } catch (error) {

@@ -1,12 +1,6 @@
 import { PlaylistTrack } from "@features/playlist/model/playlist";
 
-import { apiInstance } from "@shared/configs/api";
-
-interface GetPlaylistItemsParams {
-  playlistId: string;
-  limit?: number;
-  offset?: number;
-}
+import { APIBuilder } from "@shared/configs/api";
 
 const getPlaylistItems = async ({
   playlistId,
@@ -14,9 +8,11 @@ const getPlaylistItems = async ({
   offset = 0,
 }: GetPlaylistItemsParams): Promise<PlaylistTrack> => {
   try {
-    const response = await apiInstance.get(
-      `https://api.spotify.com/v1/playlists/${playlistId}/tracks?limit=${limit}&offset=${offset}`,
-    );
+    const response = await APIBuilder.get(`playlists/${playlistId}/tracks`)
+      .authType("user")
+      .params({ limit, offset })
+      .build()
+      .call<PlaylistTrack>();
 
     return response.data;
   } catch (error) {
@@ -26,3 +22,9 @@ const getPlaylistItems = async ({
 };
 
 export default getPlaylistItems;
+
+type GetPlaylistItemsParams = {
+  playlistId: string;
+  limit?: number;
+  offset?: number;
+};

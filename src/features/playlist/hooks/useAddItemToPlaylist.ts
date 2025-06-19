@@ -4,8 +4,10 @@ import { useParams } from "react-router";
 import { addItemToPlaylist } from "@features/playlist/api/addItemToPlaylist";
 import { Playlist } from "@features/playlist/model/playlist";
 
-import { queryClient } from "@shared/lib/react-query/queryClient";
 import { Track } from "@shared/model/sharedType";
+import { generateQueryKey } from "@shared/tanstack-query/libs/keyFactories";
+import { queryClient } from "@shared/tanstack-query/queryClient";
+import { queryKey } from "@shared/tanstack-query/queryKey";
 
 const useAddItemToPlaylist = (): UseMutationResult<
   Playlist,
@@ -22,17 +24,15 @@ const useAddItemToPlaylist = (): UseMutationResult<
       return addItemToPlaylist(playlistId, trackUris);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currentUserPlaylists"] });
-
-      if (playlistId) {
-        queryClient.invalidateQueries({ queryKey: ["playlist", playlistId] });
-        queryClient.invalidateQueries({
-          queryKey: ["playlist-items", playlistId],
-        });
-      }
-    },
-    onError: error => {
-      console.error("트랙 추가 실패:", error);
+      queryClient.invalidateQueries({
+        queryKey: generateQueryKey(queryKey.currentUserPlaylists),
+      });
+      queryClient.invalidateQueries({
+        queryKey: generateQueryKey(queryKey.playlist, playlistId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: generateQueryKey(queryKey.playlistItems, playlistId),
+      });
     },
   });
 };

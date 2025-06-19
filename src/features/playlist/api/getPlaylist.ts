@@ -1,11 +1,13 @@
 import { Playlist } from "@features/playlist/model/playlist";
 
-import { apiInstance } from "@shared/configs/api";
-import { GET_PLAYLIST_ENDPOINT } from "@shared/configs/env";
+import { APIBuilder } from "@shared/configs/api";
 
 const getPlaylist = async (id: string): Promise<Playlist> => {
   try {
-    const response = await apiInstance.get(`${GET_PLAYLIST_ENDPOINT}/${id}`);
+    const response = await APIBuilder.get(`playlists/${id}`)
+      .authType("user")
+      .build()
+      .call<Playlist>();
 
     return response.data;
   } catch (error) {

@@ -11,6 +11,8 @@ import {
 } from "@features/search/models/search";
 
 import { LONG_CACHE_CONFIG } from "@shared/configs/cacheConfig";
+import { generateQueryKey } from "@shared/tanstack-query/libs/keyFactories";
+import { queryKey } from "@shared/tanstack-query/queryKey";
 
 type UseGetInfiniteSearchForItemParams = Omit<
   GetSearchForItemParams,
@@ -26,16 +28,12 @@ const useGetInfiniteSearchForItem = (
   const hasValidQuery = !!params.q?.trim();
 
   return useInfiniteQuery({
-    queryKey: ["infiniteSearchForItem", params],
-    queryFn: ({ pageParam = 0 }) => {
-      if (!clientAuthToken) {
-        throw new Error("토큰을 사용할 수 없습니다.");
-      }
-      return getSearchForItem(clientAuthToken, {
+    queryKey: generateQueryKey(queryKey.searchForItem, params.q, params.type),
+    queryFn: ({ pageParam = 0 }) =>
+      getSearchForItem({
         ...params,
         offset: pageParam,
-      });
-    },
+      }),
     enabled: !!clientAuthToken && hasValidQuery,
     ...LONG_CACHE_CONFIG,
     initialPageParam: 0,

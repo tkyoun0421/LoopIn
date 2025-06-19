@@ -1,16 +1,25 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const useClientAuthStore = create<ClientAuthState>(set => ({
-  clientAuthToken: null,
+const useClientAuthStore = create<ClientAuthState>()(
+  persist(
+    set => ({
+      clientAuthToken: null,
 
-  setClientAuthToken: (token: string) => {
-    set({ clientAuthToken: token });
-  },
+      setClientAuthToken: (token: string) => {
+        set({ clientAuthToken: token });
+      },
 
-  clearClientAuthToken: () => {
-    set({ clientAuthToken: null });
-  },
-}));
+      clearClientAuthToken: () => {
+        set({ clientAuthToken: null });
+      },
+    }),
+    {
+      name: "client-auth-storage",
+      partialize: state => ({ clientAuthToken: state.clientAuthToken }),
+    },
+  ),
+);
 
 export default useClientAuthStore;
 

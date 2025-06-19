@@ -4,33 +4,22 @@ import { getRefreshToken } from "@features/auth/api/getRefreshToken";
 import useClientAuthStore from "@features/auth/store/useClientAuthStore";
 import { useTokenStore } from "@features/auth/store/useTokenStore";
 
-import { BASE_ENDPOINT } from "@shared/configs/env";
-
-export const apiInstance = axios.create();
-
-const handleLogout = () => {
-  useTokenStore.getState().clearToken();
-
-  window.location.href = "/";
-};
-
-type AuthStrategy = {
-  setupRequestInterceptor(http: AxiosInstance): void;
-  setupResponseInterceptor(http: AxiosInstance): void;
-};
+import { handleLogout } from "@shared/lib/utils/logout";
+import {
+  AuthStrategy,
+  AuthType,
+  HTMLHeaders,
+  HTMLMethod,
+  HTMLParams,
+} from "@shared/model/api";
 
 class ClientAuthStrategy implements AuthStrategy {
   setupRequestInterceptor(http: AxiosInstance): void {
     http.interceptors.request.use(
       config => {
         const { clientAuthToken } = useClientAuthStore.getState();
-        console.log(
-          "🔑 [ClientAuthStrategy] clientAuthToken:",
-          clientAuthToken ? "존재함" : "없음",
-        );
         if (clientAuthToken) {
           config.headers.Authorization = `Bearer ${clientAuthToken}`;
-          console.log("✅ [ClientAuthStrategy] Authorization 헤더 설정됨");
         } else {
           console.warn(
             "⚠️ [ClientAuthStrategy] clientAuthToken이 없어서 헤더 설정 안됨",
@@ -47,7 +36,9 @@ class ClientAuthStrategy implements AuthStrategy {
       response => response,
       error => {
         if (error.response?.status === 401) {
-          console.warn("Client auth token expired or invalid");
+          console.warn(
+            "⚠️ [ClientAuthStrategy] Client token 만료 - 토큰 재발급 필요",
+          );
         }
         return Promise.reject(error);
       },
@@ -81,15 +72,16 @@ class UserAuthStrategy implements AuthStrategy {
           const { refresh_token } = useTokenStore.getState();
 
           if (!refresh_token) {
-            handleLogout();
-            return Promise.reject(error);
+            console.warn(
+              "⚠️ [UserAuthStrategy] refresh_token 없음 - 로그아웃 처리",
+            );
+
+            return handleLogout();
           }
 
           try {
             console.log("🔄 [UserAuthStrategy] 토큰 갱신 시도");
             const tokenData = await getRefreshToken();
-
-            console.log("🔑 [UserAuthStrategy] tokenData:", tokenData);
 
             useTokenStore.getState().setToken({
               access_token: tokenData.access_token,
@@ -130,59 +122,6 @@ class AuthStrategyFactory {
   }
 }
 
-apiInstance.interceptors.request.use(
-  config => {
-    const { access_token } = useTokenStore.getState();
-
-    if (access_token) {
-      config.headers.Authorization = `Bearer ${access_token}`;
-    }
-    return config;
-  },
-  error => Promise.reject(error),
-);
-
-apiInstance.interceptors.response.use(
-  response => response,
-  async error => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      const { refresh_token } = useTokenStore.getState();
-
-      if (!refresh_token) {
-        handleLogout();
-        return Promise.reject(error);
-      }
-
-      try {
-        await getRefreshToken();
-
-        const { access_token } = useTokenStore.getState();
-        if (access_token) {
-          originalRequest.headers.Authorization = `Bearer ${access_token}`;
-          return apiInstance(originalRequest);
-        } else {
-          throw new Error("토큰 갱신 후에도 access_token이 없습니다.");
-        }
-      } catch (refreshError) {
-        handleLogout();
-        return Promise.reject(refreshError);
-      }
-    }
-
-    return Promise.reject(error);
-  },
-);
-
-export type HTMLMethod = "get" | "post" | "put" | "delete";
-export type HTMLHeaders = Record<string, string>;
-export type HTMLParams = Record<string, string>;
-
-export type AuthType = "client" | "user" | null;
-
 export class API {
   readonly method: HTMLMethod;
   readonly url: string;
@@ -202,20 +141,10 @@ export class API {
   call<T>(): AxiosPromise<T> {
     const http = axios.create();
 
-    console.log(
-      "🚀 [API.call] 요청 시작:",
-      this.method.toUpperCase(),
-      this.url,
-    );
-    console.log("🔐 [API.call] authType:", this.authType);
-
     if (this.authType) {
-      console.log("📦 [API.call] 인증 전략 생성:", this.authType);
       const authStrategy = AuthStrategyFactory.create(this.authType);
       authStrategy.setupRequestInterceptor(http);
       authStrategy.setupResponseInterceptor(http);
-    } else {
-      console.log("🔓 [API.call] 인증 없이 요청");
     }
 
     return http.request({ ...this });
@@ -227,7 +156,7 @@ export class APIBuilder {
 
   constructor(method: HTMLMethod, url: string, data?: unknown) {
     this._instance = new API(method, url);
-    this._instance.baseURL = BASE_ENDPOINT;
+    this._instance.baseURL = "https://api.spotify.com/v1/";
     this._instance.data = data;
     this._instance.headers = {
       "Content-Type": "application/json; charset=utf-8",

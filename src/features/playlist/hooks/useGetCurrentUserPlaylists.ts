@@ -11,19 +11,21 @@ import {
   GetCurrentUserPlaylistsResponse,
 } from "@features/playlist/model/playlist";
 
+import { generateQueryKey } from "@shared/tanstack-query/libs/keyFactories";
+import { queryKey } from "@shared/tanstack-query/queryKey";
+
 const useGetCurrentUserPlaylists = ({
   limit,
 }: GetCurrentUserPlaylistsRequest): UseInfiniteQueryResult<
   InfiniteData<GetCurrentUserPlaylistsResponse>,
   Error
 > => {
-  const access_token = useTokenStore(state => state.access_token);
+  const { access_token } = useTokenStore();
 
   return useInfiniteQuery({
-    queryKey: ["currentUserPlaylists"],
-    queryFn: ({ pageParam }) => {
-      return getCurrentUserPlaylists({ limit, offset: pageParam });
-    },
+    queryKey: generateQueryKey(queryKey.currentUserPlaylists),
+    queryFn: ({ pageParam }) =>
+      getCurrentUserPlaylists({ limit, offset: pageParam }),
     getNextPageParam: lastPage => {
       if (lastPage.next) {
         const url = new URL(lastPage.next);

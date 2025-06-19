@@ -8,6 +8,8 @@ import {
 } from "@features/search/models/search";
 
 import { LONG_CACHE_CONFIG } from "@shared/configs/cacheConfig";
+import { generateQueryKey } from "@shared/tanstack-query/libs/keyFactories";
+import { queryKey } from "@shared/tanstack-query/queryKey";
 
 const useGetSearchForItem = (
   params: GetSearchForItemParams,
@@ -16,13 +18,8 @@ const useGetSearchForItem = (
   const hasValidQuery = !!params.q?.trim();
 
   return useQuery({
-    queryKey: ["searchForItem", params],
-    queryFn: () => {
-      if (!clientAuthToken) {
-        throw new Error("토큰을 사용할 수 없습니다.");
-      }
-      return getSearchForItem(clientAuthToken, params);
-    },
+    queryKey: generateQueryKey(queryKey.searchForItem, params),
+    queryFn: () => getSearchForItem(params),
     enabled: !!clientAuthToken && hasValidQuery,
     ...LONG_CACHE_CONFIG,
   });

@@ -6,20 +6,16 @@ import {
 import { APIBuilder } from "@shared/configs/api";
 
 const getSeveralBrowseCategories = async (
-  params?: GetSeveralBrowseCategoriesParams,
+  params: GetSeveralBrowseCategoriesParams = {
+    locale: "ko",
+    limit: 30,
+    offset: 0,
+  },
 ): Promise<GetSeveralBrowseCategoriesResponse> => {
   try {
-    const queryParams: Record<string, string> = {};
-
-    if (params?.locale) queryParams.locale = params.locale;
-    if (params?.limit) queryParams.limit = params.limit.toString();
-    if (params?.offset) queryParams.offset = params.offset.toString();
-
-    const response = await APIBuilder.get(
-      "https://api.spotify.com/v1/browse/categories",
-    )
+    const response = await APIBuilder.get("browse/categories")
       .authType("client")
-      .params(queryParams)
+      .params(params)
       .build()
       .call<GetSeveralBrowseCategoriesResponse>();
 

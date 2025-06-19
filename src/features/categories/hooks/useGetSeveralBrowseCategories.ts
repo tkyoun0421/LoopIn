@@ -7,18 +7,15 @@ import {
 } from "@features/categories/models/categories";
 
 import { LONG_CACHE_CONFIG } from "@shared/configs/cacheConfig";
+import { generateQueryKey } from "@shared/tanstack-query/libs/keyFactories";
+import { queryKey } from "@shared/tanstack-query/queryKey";
 
 const useGetSeveralBrowseCategories = (
-  params: GetSeveralBrowseCategoriesParams = {
-    limit: 30,
-    offset: 0,
-  },
+  params: GetSeveralBrowseCategoriesParams,
 ): UseQueryResult<GetSeveralBrowseCategoriesResponse, Error> => {
   return useQuery({
-    queryKey: ["browse-categories", params],
-    queryFn: () => {
-      return getSeveralBrowseCategories(params);
-    },
+    queryKey: generateQueryKey(queryKey.browseCategories, params),
+    queryFn: () => getSeveralBrowseCategories(params),
     ...LONG_CACHE_CONFIG,
   });
 };

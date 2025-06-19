@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 
 import { useTokenStore } from "@features/auth/store/useTokenStore";
 
-import { queryClient } from "@shared/lib/react-query/queryClient";
+import { queryClient } from "@shared/tanstack-query/queryClient";
 
 const useLogout = (): { logout: () => void } => {
   const { clearToken } = useTokenStore();

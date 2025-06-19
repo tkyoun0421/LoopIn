@@ -3,13 +3,10 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { addItemToPlaylist } from "@features/playlist/api/addItemToPlaylist";
 import { Playlist } from "@features/playlist/model/playlist";
 
-import { queryClient } from "@shared/lib/react-query/queryClient";
 import { Track } from "@shared/model/sharedType";
-
-interface AddItemToSpecificPlaylistParams {
-  playlistId: string;
-  trackUris: Track["uri"][];
-}
+import { generateQueryKey } from "@shared/tanstack-query/libs/keyFactories";
+import { queryClient } from "@shared/tanstack-query/queryClient";
+import { queryKey } from "@shared/tanstack-query/queryKey";
 
 const useAddItemToSpecificPlaylist = (): UseMutationResult<
   Playlist,
@@ -17,23 +14,25 @@ const useAddItemToSpecificPlaylist = (): UseMutationResult<
   AddItemToSpecificPlaylistParams
 > => {
   return useMutation({
-    mutationFn: ({
-      playlistId,
-      trackUris,
-    }: AddItemToSpecificPlaylistParams) => {
-      return addItemToPlaylist(playlistId, trackUris);
-    },
-    onSuccess: (_, { playlistId }) => {
-      queryClient.invalidateQueries({ queryKey: ["currentUserPlaylists"] });
-      queryClient.invalidateQueries({ queryKey: ["playlist", playlistId] });
+    mutationFn: ({ playlistId, trackUris }: AddItemToSpecificPlaylistParams) =>
+      addItemToPlaylist(playlistId, trackUris),
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["playlist-items", playlistId],
+        queryKey: generateQueryKey(queryKey.currentUserPlaylists),
       });
-    },
-    onError: error => {
-      console.error("트랙 추가 실패:", error);
+      queryClient.invalidateQueries({
+        queryKey: generateQueryKey(queryKey.playlist),
+      });
+      queryClient.invalidateQueries({
+        queryKey: generateQueryKey(queryKey.playlistItems),
+      });
     },
   });
 };
 
 export default useAddItemToSpecificPlaylist;
+
+type AddItemToSpecificPlaylistParams = {
+  playlistId: string;
+  trackUris: Track["uri"][];
+};

@@ -1,24 +1,24 @@
-export interface SpotifyImage {
+export type SpotifyImage = {
   url: string;
   height?: number | null;
   width?: number | null;
-}
+};
 
-export interface ExplicitContentSettings {
+export type ExplicitContentSettings = {
   filter_enabled: boolean;
   filter_locked: boolean;
-}
+};
 
-export interface ExternalUrls {
+export type ExternalUrls = {
   spotify: string;
-}
+};
 
-export interface Followers {
+export type Followers = {
   href: string | null;
   total: number;
-}
+};
 
-export interface CurrentUserProfileResponse {
+export type CurrentUserProfileResponse = {
   country: string;
   display_name: string | null;
   email: string | null;
@@ -31,4 +31,4 @@ export interface CurrentUserProfileResponse {
   product: "premium" | "free" | "open" | string;
   type: "user";
   uri: string;
-}
+};

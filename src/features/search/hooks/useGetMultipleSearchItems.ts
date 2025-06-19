@@ -6,6 +6,8 @@ import { SearchForItemResponse } from "@features/search/models/search";
 
 import { LONG_CACHE_CONFIG } from "@shared/configs/cacheConfig";
 import { Artist, Track, Album } from "@shared/model/sharedType";
+import { generateQueryKey } from "@shared/tanstack-query/libs/keyFactories";
+import { queryKey } from "@shared/tanstack-query/queryKey";
 
 const YEAR_END_SEARCH_ITEMS = {
   artists: ["에스파", "단편선과 선원들", "실리카겔", "로제", "이승윤"],
@@ -59,12 +61,9 @@ const useGetMultipleSearchItems = (
 
   const queries = useQueries({
     queries: allQueries.map(({ query, type, isRookie = false }) => ({
-      queryKey: ["searchItem", type, query, isRookie],
+      queryKey: generateQueryKey(queryKey.searchForItem, query, type, isRookie),
       queryFn: (): Promise<SearchForItemResponse> => {
-        if (!clientAuthToken) {
-          throw new Error("토큰을 사용할 수 없습니다.");
-        }
-        return getSearchForItem(clientAuthToken, {
+        return getSearchForItem({
           q: query,
           type,
           limit: 1,
