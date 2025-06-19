@@ -1,12 +1,11 @@
-import axios from "axios";
-
 import {
   SearchRequestParams,
   SearchResponse,
 } from "@features/playlist/model/search";
 
+import { APIBuilder } from "@shared/configs/api";
+
 export const searchItemsByKeyword = async (
-  token: string,
   params: SearchRequestParams,
 ): Promise<SearchResponse> => {
   try {
@@ -14,20 +13,11 @@ export const searchItemsByKeyword = async (
     searchParams.append("q", params.q);
     searchParams.append("type", params.type.join(","));
 
-    if (params.market) searchParams.append("market", params.market);
-    if (params.limit) searchParams.append("limit", params.limit.toString());
-    if (params.offset) searchParams.append("offset", params.offset.toString());
-    if (params.include_external)
-      searchParams.append("include_external", params.include_external);
-
-    const response = await axios.get(
-      `https://api.spotify.com/v1/search?${searchParams.toString()}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
+    const response = await APIBuilder.get(`search?${searchParams.toString()}`)
+      .authType("user")
+      .params(params)
+      .build()
+      .call<SearchResponse>();
 
     return response.data;
   } catch (error) {

@@ -1,4 +1,4 @@
-import { apiInstance } from "@shared/configs/api";
+import { APIBuilder } from "@shared/configs/api";
 
 const postCache = new Map<string, Promise<unknown>>();
 
@@ -13,13 +13,15 @@ export const memoizedPostRequest = <T>(
     return postCache.get(cacheKey)! as Promise<T>;
   }
 
-  const request = apiInstance
-    .post(url, body, { headers })
+  const request = APIBuilder.post(url, body)
+    .headers(headers || {})
+    .build()
+    .call()
     .then(res => res.data)
     .finally(() => {
       postCache.delete(cacheKey);
     });
 
   postCache.set(cacheKey, request);
-  return request;
+  return request as Promise<T>;
 };

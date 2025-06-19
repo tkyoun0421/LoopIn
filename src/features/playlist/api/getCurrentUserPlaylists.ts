@@ -3,17 +3,18 @@ import {
   GetCurrentUserPlaylistsResponse,
 } from "@features/playlist/model/playlist";
 
-import { apiInstance } from "@shared/configs/api";
-import { CURRENT_USER_PLAYLISTS_ENDPOINT } from "@shared/configs/env";
+import { APIBuilder } from "@shared/configs/api";
 
 const getCurrentUserPlaylists = async ({
-  limit,
-  offset,
+  limit = 20,
+  offset = 0,
 }: GetCurrentUserPlaylistsRequest): Promise<GetCurrentUserPlaylistsResponse> => {
   try {
-    const response = await apiInstance.get(CURRENT_USER_PLAYLISTS_ENDPOINT, {
-      params: { limit, offset },
-    });
+    const response = await APIBuilder.get("me/playlists")
+      .authType("user")
+      .params({ limit, offset })
+      .build()
+      .call<GetCurrentUserPlaylistsResponse>();
 
     return response.data;
   } catch (error) {

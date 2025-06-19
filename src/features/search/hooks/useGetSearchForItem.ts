@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
-import useGetClientAuthToken from "@features/auth/hooks/useClientAuthToken";
+import useClientAuthStore from "@features/auth/store/useClientAuthStore";
 import getSearchForItem from "@features/search/api/getSearchForItem";
 import {
   GetSearchForItemParams,
@@ -8,22 +8,19 @@ import {
 } from "@features/search/models/search";
 
 import { LONG_CACHE_CONFIG } from "@shared/configs/cacheConfig";
+import { generateQueryKey } from "@shared/tanstack-query/libs/keyFactories";
+import { queryKey } from "@shared/tanstack-query/queryKey";
 
 const useGetSearchForItem = (
   params: GetSearchForItemParams,
 ): UseQueryResult<SearchForItemResponse, Error> => {
-  const clientToken = useGetClientAuthToken();
+  const { clientAuthToken } = useClientAuthStore();
   const hasValidQuery = !!params.q?.trim();
 
   return useQuery({
-    queryKey: ["searchForItem", params],
-    queryFn: () => {
-      if (!clientToken) {
-        throw new Error("토큰을 사용할 수 없습니다.");
-      }
-      return getSearchForItem(clientToken, params);
-    },
-    enabled: !!clientToken && hasValidQuery,
+    queryKey: generateQueryKey(queryKey.searchForItem, params),
+    queryFn: () => getSearchForItem(params),
+    enabled: !!clientAuthToken && hasValidQuery,
     ...LONG_CACHE_CONFIG,
   });
 };

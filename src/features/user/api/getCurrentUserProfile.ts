@@ -1,18 +1,15 @@
-import axios from "axios";
-
 import { CurrentUserProfileResponse } from "@features/user/model/user";
 
-import { CURRENT_USER_ENDPOINT } from "@shared/configs/env";
+import { APIBuilder } from "@shared/configs/api";
 
-const getCurrentUserProfile = async (
-  accessToken: string,
-): Promise<CurrentUserProfileResponse | undefined> => {
+const getCurrentUserProfile = async (): Promise<
+  CurrentUserProfileResponse | undefined
+> => {
   try {
-    const response = await axios.get(CURRENT_USER_ENDPOINT, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await APIBuilder.get("me")
+      .authType("user")
+      .build()
+      .call<CurrentUserProfileResponse>();
 
     return response.data;
   } catch (error) {

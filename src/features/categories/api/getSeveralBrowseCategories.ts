@@ -1,24 +1,23 @@
-import axios from "axios";
-
-import { ClientAuthTokenResponse } from "@features/auth/model/auth";
 import {
   GetSeveralBrowseCategoriesParams,
   GetSeveralBrowseCategoriesResponse,
 } from "@features/categories/models/categories";
 
-const getSeveralBrowseCategories = async (
-  clientAuthToken: ClientAuthTokenResponse["access_token"],
-  params?: GetSeveralBrowseCategoriesParams,
-): Promise<GetSeveralBrowseCategoriesResponse> => {
-  const url = `https://api.spotify.com/v1/browse/categories`;
+import { APIBuilder } from "@shared/configs/api";
 
+const getSeveralBrowseCategories = async (
+  params: GetSeveralBrowseCategoriesParams = {
+    locale: "ko",
+    limit: 30,
+    offset: 0,
+  },
+): Promise<GetSeveralBrowseCategoriesResponse> => {
   try {
-    const response = await axios.get<GetSeveralBrowseCategoriesResponse>(url, {
-      headers: {
-        Authorization: `Bearer ${clientAuthToken}`,
-      },
-      params,
-    });
+    const response = await APIBuilder.get("browse/categories")
+      .authType("client")
+      .params(params)
+      .build()
+      .call<GetSeveralBrowseCategoriesResponse>();
 
     return response.data;
   } catch (error) {

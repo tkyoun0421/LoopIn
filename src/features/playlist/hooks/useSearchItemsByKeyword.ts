@@ -4,25 +4,28 @@ import {
   UseInfiniteQueryResult,
 } from "@tanstack/react-query";
 
-import useGetClientAuthToken from "@features/auth/hooks/useClientAuthToken";
+import { useTokenStore } from "@features/auth/store/useTokenStore";
 import { searchItemsByKeyword } from "@features/playlist/api/searchItemsByKeyword";
 import {
   SearchRequestParams,
   SearchResponse,
 } from "@features/playlist/model/search";
 
+import { generateQueryKey } from "@shared/tanstack-query/libs/keyFactories";
+import { queryKey } from "@shared/tanstack-query/queryKey";
+
 const useSearchItemsByKeyword = (
   params: SearchRequestParams,
 ): UseInfiniteQueryResult<InfiniteData<SearchResponse>> => {
-  const token = useGetClientAuthToken();
+  const { access_token } = useTokenStore();
 
   return useInfiniteQuery({
-    queryKey: ["search", params],
+    queryKey: generateQueryKey(queryKey.search, params),
     queryFn: ({ pageParam = 0 }) => {
-      if (!token) {
-        throw new Error("token is not found");
-      }
-      return searchItemsByKeyword(token, { ...params, offset: pageParam });
+      return searchItemsByKeyword({
+        ...params,
+        offset: pageParam,
+      });
     },
     initialPageParam: 0,
     getNextPageParam: lastPage => {
@@ -41,7 +44,7 @@ const useSearchItemsByKeyword = (
 
       return undefined;
     },
-    enabled: !!params.q,
+    enabled: !!params.q && !!access_token,
   });
 };
 

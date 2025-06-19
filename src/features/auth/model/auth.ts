@@ -1,22 +1,22 @@
-export interface ClientAuthTokenResponse {
+export type ClientAuthTokenResponse = {
   access_token: string;
   token_type: string;
   expires_in: number;
-}
+};
 
-export interface AuthUrlParams {
+export type AuthUrlParams = {
   response_type: "code";
   client_id: string;
   scope: string;
   code_challenge_method: "S256";
   code_challenge: string;
   redirect_uri: string;
-}
+};
 
-export interface ExchangeTokenResponse extends ClientAuthTokenResponse {
+export type ExchangeTokenResponse = ClientAuthTokenResponse & {
   refresh_token: string;
   scope: string;
-}
+};
 
 export type OAuthError =
   | "access_denied"

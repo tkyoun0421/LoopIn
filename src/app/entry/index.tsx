@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router";
 import reportWebVitals from "@app/configs/reportWebVitals";
 import App from "@app/routes/App";
 
-import { queryClient } from "@shared/lib/react-query/queryClient";
+import { queryClient } from "@shared/tanstack-query/queryClient";
 import ToastContainer from "@shared/ui/Toast/ToastContainer";
 
 import "@app/styles/globals.css";

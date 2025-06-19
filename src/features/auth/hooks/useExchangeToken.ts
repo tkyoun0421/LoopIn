@@ -6,11 +6,6 @@ import useLogout from "@features/auth/hooks/useLogout";
 import { ExchangeTokenResponse } from "@features/auth/model/auth";
 import { useTokenStore } from "@features/auth/store/useTokenStore";
 
-interface UseExchangeTokenOptions {
-  onSuccess?: (data: ExchangeTokenResponse) => void;
-  onError?: (error: unknown) => void;
-}
-
 const useExchangeToken = (
   options?: UseExchangeTokenOptions,
 ): UseMutationResult<ExchangeTokenResponse, unknown, string> => {
@@ -36,3 +31,8 @@ const useExchangeToken = (
 };
 
 export default useExchangeToken;
+
+type UseExchangeTokenOptions = {
+  onSuccess?: (data: ExchangeTokenResponse) => void;
+  onError?: (error: unknown) => void;
+};

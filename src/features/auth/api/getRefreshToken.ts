@@ -1,19 +1,16 @@
-import axios from "axios";
-
+import { ExchangeTokenResponse } from "@features/auth/model/auth";
 import { useTokenStore } from "@features/auth/store/useTokenStore";
 
+import { APIBuilder } from "@shared/configs/api";
 import { CLIENT_ID } from "@shared/configs/clientConfig";
-import { GET_TOKEN_ENDPOINT } from "@shared/configs/env";
 
-export const getRefreshToken = async (): Promise<void> => {
+export const getRefreshToken = async (): Promise<ExchangeTokenResponse> => {
   const { refresh_token } = useTokenStore.getState();
 
   if (!refresh_token) {
     console.error("Refresh token이 없습니다.");
     throw new Error("No refresh token available");
   }
-
-  const url = GET_TOKEN_ENDPOINT;
 
   const params = new URLSearchParams({
     grant_type: "refresh_token",
@@ -22,27 +19,15 @@ export const getRefreshToken = async (): Promise<void> => {
   });
 
   try {
-    const response = await axios.post(url, params, {
-      headers: {
+    const response = await APIBuilder.post("/api/token", params)
+      .baseURL("https://accounts.spotify.com")
+      .headers({
         "Content-Type": "application/x-www-form-urlencoded",
-      },
-    });
+      })
+      .build()
+      .call<ExchangeTokenResponse>();
 
-    const {
-      access_token,
-      refresh_token: newRefreshToken,
-      scope,
-      token_type,
-      expires_in,
-    } = response.data;
-
-    useTokenStore.getState().setToken({
-      access_token: access_token,
-      refresh_token: newRefreshToken || refresh_token,
-      scope: scope || "",
-      token_type: token_type || "Bearer",
-      expires_in: expires_in || 3600,
-    });
+    return response.data;
   } catch (error) {
     console.error("토큰 갱신 실패:", error);
     throw new Error("토큰 갱신 실패");

@@ -3,7 +3,7 @@ import {
   UseInfiniteQueryResult,
 } from "@tanstack/react-query";
 
-import useGetClientAuthToken from "@features/auth/hooks/useClientAuthToken";
+import useClientAuthStore from "@features/auth/store/useClientAuthStore";
 import getSearchForItem from "@features/search/api/getSearchForItem";
 import {
   GetSearchForItemParams,
@@ -11,6 +11,8 @@ import {
 } from "@features/search/models/search";
 
 import { LONG_CACHE_CONFIG } from "@shared/configs/cacheConfig";
+import { generateQueryKey } from "@shared/tanstack-query/libs/keyFactories";
+import { queryKey } from "@shared/tanstack-query/queryKey";
 
 type UseGetInfiniteSearchForItemParams = Omit<
   GetSearchForItemParams,
@@ -22,21 +24,17 @@ type UseGetInfiniteSearchForItemParams = Omit<
 const useGetInfiniteSearchForItem = (
   params: UseGetInfiniteSearchForItemParams,
 ): UseInfiniteQueryResult<SearchForItemResponse, Error> => {
-  const clientToken = useGetClientAuthToken();
+  const { clientAuthToken } = useClientAuthStore();
   const hasValidQuery = !!params.q?.trim();
 
   return useInfiniteQuery({
-    queryKey: ["infiniteSearchForItem", params],
-    queryFn: ({ pageParam = 0 }) => {
-      if (!clientToken) {
-        throw new Error("토큰을 사용할 수 없습니다.");
-      }
-      return getSearchForItem(clientToken, {
+    queryKey: generateQueryKey(queryKey.searchForItem, params.q, params.type),
+    queryFn: ({ pageParam = 0 }) =>
+      getSearchForItem({
         ...params,
         offset: pageParam,
-      });
-    },
-    enabled: !!clientToken && hasValidQuery,
+      }),
+    enabled: !!clientAuthToken && hasValidQuery,
     ...LONG_CACHE_CONFIG,
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {

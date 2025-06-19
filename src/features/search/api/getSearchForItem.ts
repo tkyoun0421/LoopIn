@@ -1,22 +1,21 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 
-import { ClientAuthTokenResponse } from "@features/auth/model/auth";
 import {
   GetSearchForItemParams,
   SearchForItemResponse,
 } from "@features/search/models/search";
 
+import { APIBuilder } from "@shared/configs/api";
+
 const getSearchForItem = async (
-  clientAuthToken: ClientAuthTokenResponse["access_token"],
-  params?: GetSearchForItemParams,
+  params: GetSearchForItemParams,
 ): Promise<SearchForItemResponse> => {
   try {
-    const response = await axios.get(`https://api.spotify.com/v1/search`, {
-      headers: {
-        Authorization: `Bearer ${clientAuthToken}`,
-      },
-      params,
-    });
+    const response = await APIBuilder.get("search")
+      .authType("client")
+      .params(params)
+      .build()
+      .call<SearchForItemResponse>();
 
     return response.data;
   } catch (error) {
