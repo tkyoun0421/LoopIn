@@ -14,7 +14,7 @@ const PlaylistDetailDescription = ({
   return (
     <>
       <p
-        className="text-md mb-6 [&_a]:text-blue-500 [&_a]:underline [&_a]:hover:text-blue-700"
+        className="lg:text-md mb-6 text-sm [&_a]:text-blue-500 [&_a]:underline [&_a]:hover:text-blue-700"
         dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
       />
     </>

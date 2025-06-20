@@ -4,12 +4,17 @@ import { useNavigate } from "react-router";
 
 import { SimplifiedPlaylist } from "@features/playlist/model/playlist";
 
+import useImagePresets from "@shared/hooks/useImagePresets";
+import { selectImageByPreset } from "@shared/lib/utils/imageUtils";
+import OptimizedImage from "@shared/ui/OptimizedImage/OptimizedImage";
+
 const MyLibraryPlaylistItem = ({
   playlist,
 }: {
   playlist: SimplifiedPlaylist;
 }): JSX.Element => {
   const navigate = useNavigate();
+  const imagePresets = useImagePresets();
 
   const handleClick = () => {
     navigate(`/playlist/${playlist.id}`);
@@ -22,10 +27,15 @@ const MyLibraryPlaylistItem = ({
     >
       <div className="flex-shrink-0">
         {playlist.images && playlist.images.length > 0 ? (
-          <img
-            src={playlist.images[0].url}
+          <OptimizedImage
+            src={selectImageByPreset(playlist.images, "thumbnail") || ""}
             alt={playlist.name}
-            className="h-12 w-12 rounded-lg object-cover"
+            width={imagePresets.thumbnail.width}
+            height={imagePresets.thumbnail.height}
+            sizes={imagePresets.thumbnail.sizes}
+            className={imagePresets.thumbnail.className}
+            loading="lazy"
+            fallback={<Heart size={20} className="text-red-500" />}
           />
         ) : (
           <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 dark:from-purple-400/30 dark:to-pink-400/30">

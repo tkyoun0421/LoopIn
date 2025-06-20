@@ -57,7 +57,7 @@ const PlaylistSearch = memo(() => {
   const ErrorMessage = useMemo(
     () => (
       <div className="flex h-full items-center justify-center">
-        <span className="text-red-500">
+        <span className="sm:text-md text-sm text-red-500">
           검색 중 오류가 발생했습니다. 다시 시도해주세요.
         </span>
       </div>
@@ -68,7 +68,7 @@ const PlaylistSearch = memo(() => {
   const InitialMessage = useMemo(
     () => (
       <div className="flex h-full items-center justify-center">
-        <span className="text-[hsl(var(--muted-foreground))]">
+        <span className="sm:text-md text-sm text-[hsl(var(--muted-foreground))]">
           검색어를 입력하여 트랙을 찾아보세요.
         </span>
       </div>

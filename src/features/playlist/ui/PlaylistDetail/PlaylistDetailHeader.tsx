@@ -23,13 +23,15 @@ const PlaylistDetailHeader = ({
     >
       <PlaylistDetailBackground playlist={playlist} />
 
-      <div className="relative z-10 flex gap-6">
+      <div className="relative z-10 flex flex-col items-center gap-6 sm:flex-row">
         <PlaylistDetailImage playlist={playlist} />
         <div className="flex flex-col text-white">
           <PlaylistDetailBadge playlist={playlist} />
-          <h2 className="mb-5 text-3xl font-bold">{playlist?.name}</h2>
+          <h2 className="mb-5 text-xl font-bold lg:text-3xl">
+            {playlist?.name}
+          </h2>
           <PlaylistDetailDescription playlist={playlist} />
-          <div className="mt-auto flex items-center gap-2">
+          <div className="lg:text-md mt-auto flex items-center gap-2 text-sm">
             <PlaylistDetailInfo playlist={playlist} />
           </div>
         </div>
