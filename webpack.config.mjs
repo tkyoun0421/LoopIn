@@ -83,6 +83,7 @@ export default (_env, argv) => {
       open: true,
       hot: true,
       historyApiFallback: true,
+      allowedHosts: "all",
     },
     optimization: {
       minimize: isProduction,
