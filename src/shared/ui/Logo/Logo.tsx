@@ -10,10 +10,9 @@ const Logo = (): JSX.Element => {
         <div className="rounded-full bg-gradient-to-r from-purple-600 to-pink-600 p-3">
           <Music size={30} className="text-white" />
         </div>
-        <h1
-          className={`bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-2xl font-bold text-transparent`}
-        >
-          Loop<span className="text-purple-800 dark:text-purple-300">In</span>
+        <h1 className="text-gradient text-2xl font-bold">
+          Loop
+          <span className="text-purple-800 dark:text-purple-300">In</span>
         </h1>
       </Link>
     </div>

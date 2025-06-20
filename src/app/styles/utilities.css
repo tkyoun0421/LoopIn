@@ -1,0 +1,46 @@
+@layer utilities {
+  .text-gradient {
+    background-image: linear-gradient(to right, #9333ea, #ec4899);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .backdrop-blur {
+    --tw-backdrop-blur: blur(8px);
+    --tw-backdrop-brightness: brightness(1);
+    --tw-backdrop-contrast: contrast(1);
+    --tw-backdrop-grayscale: grayscale(0);
+    --tw-backdrop-hue-rotate: hue-rotate(0deg);
+    --tw-backdrop-invert: invert(0);
+    --tw-backdrop-opacity: opacity(1);
+    --tw-backdrop-saturate: saturate(1);
+    --tw-backdrop-sepia: sepia(0);
+
+    background-color: rgba(255, 255, 255, 0.8);
+
+    -webkit-backdrop-filter: var(--tw-backdrop-blur, blur(8px))
+      var(--tw-backdrop-brightness, brightness(1))
+      var(--tw-backdrop-contrast, contrast(1))
+      var(--tw-backdrop-grayscale, grayscale(0))
+      var(--tw-backdrop-hue-rotate, hue-rotate(0deg))
+      var(--tw-backdrop-invert, invert(0))
+      var(--tw-backdrop-opacity, opacity(1))
+      var(--tw-backdrop-saturate, saturate(1))
+      var(--tw-backdrop-sepia, sepia(0));
+
+    backdrop-filter: var(--tw-backdrop-blur, blur(8px))
+      var(--tw-backdrop-brightness, brightness(1))
+      var(--tw-backdrop-contrast, contrast(1))
+      var(--tw-backdrop-grayscale, grayscale(0))
+      var(--tw-backdrop-hue-rotate, hue-rotate(0deg))
+      var(--tw-backdrop-invert, invert(0))
+      var(--tw-backdrop-opacity, opacity(1))
+      var(--tw-backdrop-saturate, saturate(1))
+      var(--tw-backdrop-sepia, sepia(0));
+  }
+
+  [dark-theme="dark"] .backdrop-blur {
+    background-color: rgba(17, 24, 39, 0.8);
+  }
+}

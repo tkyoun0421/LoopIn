@@ -8,9 +8,9 @@ import { handleLogout } from "@shared/lib/utils/logout";
 import {
   AuthStrategy,
   AuthType,
-  HTMLHeaders,
-  HTMLMethod,
-  HTMLParams,
+  HTTPHeaders,
+  HTTPMethod,
+  HTTPParams,
 } from "@shared/model/api";
 
 class ClientAuthStrategy implements AuthStrategy {
@@ -126,17 +126,17 @@ class AuthStrategyFactory {
 }
 
 export class API {
-  readonly method: HTMLMethod;
+  readonly method: HTTPMethod;
   readonly url: string;
   baseURL?: string;
-  headers?: HTMLHeaders;
-  params?: HTMLParams;
+  headers?: HTTPHeaders;
+  params?: HTTPParams;
   data?: unknown;
   timeout?: number;
   withCredentials?: boolean;
   authType?: AuthType;
 
-  constructor(method: HTMLMethod, url: string) {
+  constructor(method: HTTPMethod, url: string) {
     this.method = method;
     this.url = url;
   }
@@ -157,7 +157,7 @@ export class API {
 export class APIBuilder {
   private _instance: API;
 
-  constructor(method: HTMLMethod, url: string, data?: unknown) {
+  constructor(method: HTTPMethod, url: string, data?: unknown) {
     this._instance = new API(method, url);
     this._instance.baseURL = "https://api.spotify.com/v1/";
     this._instance.data = data;
@@ -180,7 +180,7 @@ export class APIBuilder {
     return this;
   }
 
-  headers(value: HTMLHeaders): APIBuilder {
+  headers(value: HTTPHeaders): APIBuilder {
     this._instance.headers = value;
     return this;
   }
@@ -190,7 +190,7 @@ export class APIBuilder {
     return this;
   }
 
-  params(value: HTMLParams): APIBuilder {
+  params(value: HTTPParams): APIBuilder {
     this._instance.params = value;
     return this;
   }
