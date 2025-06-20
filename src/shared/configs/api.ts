@@ -16,14 +16,39 @@ import {
 class ClientAuthStrategy implements AuthStrategy {
   setupRequestInterceptor(http: AxiosInstance): void {
     http.interceptors.request.use(
-      config => {
+      async config => {
         const { clientAuthToken } = useClientAuthStore.getState();
+
         if (clientAuthToken) {
           config.headers.Authorization = `Bearer ${clientAuthToken}`;
         } else {
           console.warn(
-            "⚠️ [ClientAuthStrategy] clientAuthToken이 없어서 헤더 설정 안됨",
+            "⚠️ [ClientAuthStrategy] clientAuthToken이 없어서 토큰 요청 시도",
           );
+          try {
+            const getClientAuthToken = (
+              await import("@features/auth/api/getClientAuthToken")
+            ).default;
+            const tokenResponse = await getClientAuthToken();
+
+            if (tokenResponse?.access_token) {
+              useClientAuthStore
+                .getState()
+                .setClientAuthToken(tokenResponse.access_token);
+              config.headers.Authorization = `Bearer ${tokenResponse.access_token}`;
+              console.log("✅ [ClientAuthStrategy] 클라이언트 토큰 발급 성공");
+            } else {
+              throw new Error("클라이언트 토큰 발급 실패");
+            }
+          } catch (error) {
+            console.error(
+              "❌ [ClientAuthStrategy] 클라이언트 토큰 발급 실패:",
+              error,
+            );
+            return Promise.reject(
+              new Error("클라이언트 인증 토큰을 가져올 수 없습니다"),
+            );
+          }
         }
         return config;
       },

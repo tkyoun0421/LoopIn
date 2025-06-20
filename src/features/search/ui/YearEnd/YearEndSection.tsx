@@ -23,7 +23,7 @@ const YearEndSection = <T extends Artist | Track | Album>({
     >
       <h2 className="text-xl font-bold sm:text-2xl">{title}</h2>
       {hasErrors && <ErrorMessage message={errorMessage} />}
-      <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+      <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6">
         {isAllLoading && <YearEndCardSkeleton length={5} />}
         {items.map(({ searchQuery, item }) => {
           return item ? renderCard(item, searchQuery) : null;

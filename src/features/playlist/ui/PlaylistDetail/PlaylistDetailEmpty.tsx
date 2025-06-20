@@ -14,10 +14,10 @@ const PlaylistDetailEmpty = ({
     <section className="flex min-h-[60vh] min-w-full flex-col items-center py-12">
       <div className="w-full">
         <div className="mb-8 space-y-3 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">
             {josa(playlistName, "이/가")} 비어있어요
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-sm sm: text-md text-gray-600 dark:text-gray-400">
             좋아하는 음악을 검색해서 <br />
             나만의 플레이리스트를 만들어보세요
           </p>

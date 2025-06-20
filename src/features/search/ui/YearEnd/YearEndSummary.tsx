@@ -7,7 +7,7 @@ import { Album, Artist, Track } from "@shared/model/sharedType";
 
 const YearEndSummary = (): JSX.Element => {
   return (
-    <section className="mt-6 flex flex-col gap-12">
+    <section className="sm: mt-6 flex flex-col gap-12">
       <div className="text-left">
         <h2 className="text-hsl(var(--foreground)) text-3xl font-bold sm:text-4xl">
           2024 올해의 음악 정리
