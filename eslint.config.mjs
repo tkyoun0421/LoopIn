@@ -122,9 +122,6 @@ export default [
           project: "./tsconfig.json",
           alwaysTryTypes: true,
         },
-        webpack: {
-          config: "./webpack.config.js",
-        },
       },
       "boundaries/elements": [
         { type: "app", pattern: "@app/*" },

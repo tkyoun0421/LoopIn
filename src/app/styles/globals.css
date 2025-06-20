@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
 @import "tailwindcss";
+@import "./utilities.css";
 
 @custom-variant dark (&:where([dark-theme="dark"], [dark-theme="dark"] *));
 
@@ -81,7 +82,7 @@ body {
 
 .container {
   width: 100%;
-  margin-inline: auto;
+  @apply mx-0 px-2 xl:mx-auto;
 }
 
 .scrollbar-hide {
