@@ -1,10 +1,14 @@
-const path = require("path");
+import path from "path";
+import { fileURLToPath } from "url";
 
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const Dotenv = require("dotenv-webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import Dotenv from "dotenv-webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
-module.exports = (_env, argv) => {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default (_env, argv) => {
   const isProduction = argv.mode === "production";
 
   return {
