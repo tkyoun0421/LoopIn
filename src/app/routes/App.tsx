@@ -6,6 +6,7 @@ const HomePage = lazy(() => import("@pages/HomePage/HomePage"));
 const SearchPage = lazy(() => import("@pages/SearchPage/SearchPage"));
 const NotFoundPage = lazy(() => import("@pages/NotFoundPage/NotFoundPage"));
 const CallbackPage = lazy(() => import("@pages/CallbackPage/CallbackPage"));
+const PlaylistPage = lazy(() => import("@pages/PlaylistPage/PlaylistPage"));
 const PlaylistDetailPage = lazy(
   () => import("@pages/PlaylistDetailPage/PlaylistDetailPage"),
 );
@@ -24,6 +25,7 @@ const App = (): JSX.Element => {
           <Route index element={<SearchPage />} />
           <Route path=":keyword" element={<SearchDetailPage />} />
         </Route>
+        <Route path="playlist" element={<PlaylistPage />} />
         <Route path="playlist/:id" element={<PlaylistDetailPage />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />

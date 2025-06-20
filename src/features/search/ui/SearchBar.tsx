@@ -8,7 +8,7 @@ const SearchBar = (): JSX.Element => {
 
   return (
     <section className="flex flex-col gap-4">
-      <h3 className="text-2xl font-bold">Search</h3>
+      <h3 className="text-xl font-bold sm:text-2xl">Search</h3>
       <div className="flex-shrink-0">
         <SearchInput
           value={keyword}

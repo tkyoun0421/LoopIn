@@ -21,7 +21,7 @@ const YearEndSection = <T extends Artist | Track | Album>({
     <section
       className={`flex flex-col gap-6 ${dataKey === "albums" ? "mt-6" : ""}`}
     >
-      <h2 className="text-2xl font-bold">{title}</h2>
+      <h2 className="text-xl font-bold sm:text-2xl">{title}</h2>
       {hasErrors && <ErrorMessage message={errorMessage} />}
       <div className="mb-8 grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         {isAllLoading && <YearEndCardSkeleton length={5} />}

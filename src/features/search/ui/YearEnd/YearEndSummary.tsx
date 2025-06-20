@@ -9,10 +9,10 @@ const YearEndSummary = (): JSX.Element => {
   return (
     <section className="mt-6 flex flex-col gap-12">
       <div className="text-left">
-        <h2 className="text-hsl(var(--foreground)) text-4xl font-bold">
+        <h2 className="text-hsl(var(--foreground)) text-3xl font-bold sm:text-4xl">
           2024 올해의 음악 정리
         </h2>
-        <p className="mt-2 text-lg text-[hsl(var(--muted-foreground))]">
+        <p className="mt-2 text-base text-[hsl(var(--muted-foreground))] sm:text-lg">
           2024년 가장 사랑받은 음악들을 만나보세요
         </p>
       </div>
