@@ -2,6 +2,8 @@ import { josa } from "es-hangul";
 import { Plus } from "lucide-react";
 import { JSX, useCallback, useState } from "react";
 
+import getSpotifyAuth from "@features/auth/api/getSpotifyAuth";
+import { useTokenStore } from "@features/auth/store/useTokenStore";
 import useAddItemToSpecificPlaylist from "@features/playlist/hooks/useAddItemToSpecificPlaylist";
 import { SearchForItemResponse } from "@features/search/models/search";
 
@@ -21,6 +23,7 @@ const SearchResultTrack = ({
   isLoading = false,
 }: SearchResultTrackProps): JSX.Element => {
   const trackItems = tracks?.items || [];
+  const { access_token } = useTokenStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTrack, setSelectedTrack] = useState<Track | null>(null);
 
@@ -33,6 +36,9 @@ const SearchResultTrack = ({
     (track: Track, _index: number) => {
       const handleAddClick = (e: React.MouseEvent) => {
         e.stopPropagation();
+        if (!access_token) {
+          return getSpotifyAuth();
+        }
         setSelectedTrack(track);
         setIsModalOpen(true);
       };
@@ -50,7 +56,7 @@ const SearchResultTrack = ({
         </Button>
       );
     },
-    [isPending],
+    [isPending, access_token],
   );
 
   const handlePlaylistSelect = (playlistId: string) => {

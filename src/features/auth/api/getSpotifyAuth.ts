@@ -20,6 +20,10 @@ const getSpotifyAuth = async (): Promise<void> => {
 
   window.localStorage.setItem("code_verifier", codeVerifier);
 
+  // 현재 경로를 저장
+  const currentPath = window.location.pathname + window.location.search;
+  window.localStorage.setItem("redirect_after_login", currentPath);
+
   if (isAuthParamsValid) {
     const params: AuthUrlParams = {
       response_type: "code",
