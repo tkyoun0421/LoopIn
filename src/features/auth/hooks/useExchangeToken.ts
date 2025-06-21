@@ -21,7 +21,6 @@ const useExchangeToken = (
     onSuccess: data => {
       setToken(data);
 
-      // localStorage에서 경로를 가져오면서 동시에 삭제
       const redirectPath = window.localStorage.getItem("redirect_after_login");
       if (redirectPath) {
         window.localStorage.removeItem("redirect_after_login");
