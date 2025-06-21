@@ -1,6 +1,8 @@
 import { Plus } from "lucide-react";
 import { memo, useCallback } from "react";
 
+import getSpotifyAuth from "@features/auth/api/getSpotifyAuth";
+import { useTokenStore } from "@features/auth/store/useTokenStore";
 import useAddItemToPlaylist from "@features/playlist/hooks/useAddItemToPlaylist";
 
 import { Track } from "@shared/model/sharedType";
@@ -16,12 +18,17 @@ type SearchResultsTableProps = {
 
 const SearchResultsTable = memo<SearchResultsTableProps>(
   ({ tracks, onLoadMore, hasNextPage = false, isFetchingNextPage = false }) => {
+    const accessToken = useTokenStore.getState();
     const { mutate: addItemToPlaylist, isPending } = useAddItemToPlaylist();
 
     const renderAddButton = useCallback(
       (track: Track, _index: number) => {
         const handleAddClick = (e: React.MouseEvent) => {
           e.stopPropagation();
+          if (!accessToken) {
+            return getSpotifyAuth();
+          }
+
           addItemToPlaylist([track.uri]);
         };
 
@@ -38,7 +45,7 @@ const SearchResultsTable = memo<SearchResultsTableProps>(
           </Button>
         );
       },
-      [addItemToPlaylist, isPending],
+      [addItemToPlaylist, isPending, accessToken],
     );
 
     return (

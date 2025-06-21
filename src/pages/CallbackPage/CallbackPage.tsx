@@ -1,4 +1,4 @@
-import { JSX, useEffect } from "react";
+import { JSX, useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router";
 
 import LoadingPage from "@pages/LoadingPage/LoadingPage";
@@ -11,6 +11,7 @@ const CallbackPage = (): JSX.Element => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { logout } = useLogout();
+  const hasProcessed = useRef(false);
 
   const code = searchParams.get("code");
   const error = searchParams.get("error");
@@ -19,6 +20,11 @@ const CallbackPage = (): JSX.Element => {
   const { mutate: exchangeToken } = useExchangeToken();
 
   useEffect(() => {
+    if (hasProcessed.current) {
+      return;
+    }
+    hasProcessed.current = true;
+
     if (error) {
       console.error("OAuth 에러:", { error, errorDescription });
       if (error === "access_denied") {

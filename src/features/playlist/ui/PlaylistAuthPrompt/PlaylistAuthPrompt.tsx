@@ -23,7 +23,7 @@ const PlaylistAuthPrompt = ({
     <div className="flex min-h-[60vh] flex-col items-center px-2 py-12">
       <div className="mx-auto max-w-lg text-center">
         <div className="mb-8 space-y-3">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h2 className="text-md font-bold text-gray-900 md:text-xl dark:text-white">
             로그인을 하면
             <br />
             {josa(playlistName, "을/를")} 바로 감상할 수 있어요
@@ -54,8 +54,10 @@ const PlaylistAuthPrompt = ({
               <AlertOctagon />
             </div>
             <div className="text-left text-sm text-blue-800 dark:text-blue-200">
-              <p className="font-medium">왜 로그인이 필요한가요?</p>
-              <p className="mt-1 text-blue-600 dark:text-blue-300">
+              <p className="text-sm font-medium md:text-base">
+                왜 로그인이 필요한가요?
+              </p>
+              <p className="mt-1 text-xs text-blue-600 md:text-sm dark:text-blue-300">
                 Spotify API를 통해 음악을 재생하고 플레이리스트를 관리하기
                 위해서는 사용자 인증이 필요합니다.
               </p>

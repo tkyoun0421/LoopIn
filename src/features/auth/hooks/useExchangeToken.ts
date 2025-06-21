@@ -20,7 +20,13 @@ const useExchangeToken = (
 
     onSuccess: data => {
       setToken(data);
-      navigate("/");
+
+      const redirectPath = window.localStorage.getItem("redirect_after_login");
+      if (redirectPath) {
+        window.localStorage.removeItem("redirect_after_login");
+      }
+
+      navigate(redirectPath || "/");
     },
     onError: () => {
       logout();
